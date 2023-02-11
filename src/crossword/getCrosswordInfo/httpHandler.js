@@ -1,7 +1,7 @@
 import { getSupabaseClient } from '../../common/factory';
 
-export async function getCrosswordInfo(logger) {
-  logger('getCrosswordInfo()');
+export async function getCrosswordInfo() {
+  console.log('getCrosswordInfo()');
   const supabase = getSupabaseClient();
   const { data, err } = await supabase.from('Crossword-Solutions').select('*');
   if (err) console.error('Error: ', err);

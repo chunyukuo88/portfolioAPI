@@ -1,0 +1,19 @@
+service: portfolioAPI
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+custom:
+  tableName: Crossword-Solutions
+
+functions:
+  getCrosswordInfo:
+    handler: dist/crossword/getCrosswordInfo/httpHandler.getCrosswordInfo
+    events:
+      - httpApi:
+          timeout: 10
+          path: /crossword/allCrosswords
+          method: GET
+          integration: lambda-proxy

@@ -1,0 +1,15 @@
+{
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "parser": "@babel/eslint-parser",
+  "extends": "airbnb-base",
+  "ignorePatterns": ["*.test.js" ],
+  "rules": {
+    "class-methods-use-this": "off",
+    "import/prefer-default-export": "off",
+    "import/no-import-module-exports": "off",
+    "max-len": [1, { "code": 120 }]
+  }
+}
