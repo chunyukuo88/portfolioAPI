@@ -8,16 +8,16 @@ exports.getCrosswordInfo = getCrosswordInfo;
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 var _factory = require("../../common/factory");
-function getCrosswordInfo(_x) {
+function getCrosswordInfo() {
   return _getCrosswordInfo.apply(this, arguments);
 }
 function _getCrosswordInfo() {
-  _getCrosswordInfo = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(logger) {
+  _getCrosswordInfo = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
     var supabase, _yield$supabase$from$, data, err, response;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          logger('getCrosswordInfo()');
+          console.log('getCrosswordInfo()');
           supabase = (0, _factory.getSupabaseClient)();
           _context.next = 4;
           return supabase.from('Crossword-Solutions').select('*');

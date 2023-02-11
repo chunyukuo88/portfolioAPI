@@ -1,4 +1,6 @@
 import { getSupabaseClient } from '../../common/factory';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export async function getCrosswordInfo() {
   console.log('getCrosswordInfo()');

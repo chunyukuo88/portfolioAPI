@@ -21,12 +21,12 @@ describe('GIVEN: A logger function,', () => {
     jest.spyOn(supabaseClientMock, 'select').mockResolvedValueOnce({ data: mockCrosswordData });
     jest.spyOn(getClient, 'getSupabaseClient').mockReturnValueOnce(supabaseClientMock);
   });
+  const consoleSpy = jest
+    .spyOn(console, 'log')
+    .mockImplementation(jest.fn());
+
   describe('WHEN: this function is invoked,', () => {
     it('THEN: It uses the console.log method to log the function\'s invocation.', async () => {
-      const consoleSpy = jest
-        .spyOn(console, 'log')
-        .mockImplementationOnce(jest.fn());
-
       await getCrosswordInfo();
 
       expect(consoleSpy).toHaveBeenCalledTimes(1);
