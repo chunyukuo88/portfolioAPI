@@ -9,7 +9,7 @@ export const buildSuccessResponse = (data) => ({
   },
 });
 
-export const buildErrorResponse = (statusCode) => ({statusCode});
+export const buildErrorResponse = (statusCode) => ({ statusCode });
 
 export const httpStatus = {
   INTERNAL_ERROR: 500,

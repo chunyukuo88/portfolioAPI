@@ -1,8 +1,9 @@
-import * as dotenv from 'dotenv';
 import { getSupabaseClient } from '../../common/factory';
-import {buildErrorResponse, buildSuccessResponse, httpStatus} from '../../common/http';
-
-dotenv.config();
+import {
+  buildErrorResponse,
+  buildSuccessResponse,
+  httpStatus,
+} from '../../common/http';
 
 export async function getCrosswordInfo() {
   console.log('getCrosswordInfo()');
@@ -15,4 +16,3 @@ export async function getCrosswordInfo() {
     return buildErrorResponse(httpStatus.INTERNAL_ERROR);
   }
 }
-
