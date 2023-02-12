@@ -1,3 +1,9 @@
+export const httpStatus = {
+  INTERNAL_ERROR: 500,
+  MISSING_ARGUMENT: 422,
+  SUCCESSFUL: 200,
+};
+
 export const buildSuccessResponse = (data) => ({
   statusCode: httpStatus.SUCCESSFUL,
   body: JSON.stringify(data),
@@ -10,9 +16,3 @@ export const buildSuccessResponse = (data) => ({
 });
 
 export const buildErrorResponse = (statusCode) => ({ statusCode });
-
-export const httpStatus = {
-  INTERNAL_ERROR: 500,
-  MISSING_ARGUMENT: 422,
-  SUCCESSFUL: 200,
-};
