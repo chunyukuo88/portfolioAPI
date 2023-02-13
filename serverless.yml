@@ -12,7 +12,7 @@ provider:
       supabaseAuthorizer:
         type: jwt
         identitySource: $request.header.Authorization
-        issueUrl: https://czzbyiyicvjcorsepbfp.supabase.co # ? This is just my project URL
+        issuerUrl: https://czzbyiyicvjcorsepbfp.supabase.co # ? This is just my project URL
         audience:
           - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6emJ5aXlpY3ZqY29yc2VwYmZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzQ1MTExNjgsImV4cCI6MTk5MDA4NzE2OH0.y06BXLuGUGK4HbOq6seg2l6ndzbbG46-NjOzGj2xRJo # I'm using the public API key
     cors: true
@@ -38,4 +38,4 @@ functions:
           method: POST
           integration: lambda-proxy
           authorizer:
-            name:
+            name: supabaseAuthorizer

@@ -5,7 +5,7 @@ import {
   httpStatus,
 } from '../../common/http';
 
-const missingArgument = (httpRequest) => (!httpRequest || !httpRequest.body);
+const missingArgument = (httpRequest) => !httpRequest || !httpRequest.body;
 
 export async function writeCrosswordInfo(httpRequest) {
   if (missingArgument(httpRequest)) return buildErrorResponse(httpStatus.MISSING_ARGUMENT);
@@ -13,9 +13,7 @@ export async function writeCrosswordInfo(httpRequest) {
   try {
     const supabase = getSupabaseClient();
     const newCrosswordData = JSON.parse(httpRequest.body);
-    await supabase
-      .from('Crossword-Solutions')
-      .insert(newCrosswordData);
+    await supabase.from('Crossword-Solutions').insert(newCrosswordData);
     return buildSuccessResponse([]);
   } catch (e) {
     console.error(e);
