@@ -4,6 +4,18 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  environment:
+    NODE_ENV: ${opt:stage}
+    Table_NAME: Crossword-Solutions
+  httpApi:
+    authorizers:
+      supabaseAuthorizer:
+        type: jwt
+        identitySource: $request.header.Authorization
+        issueUrl: https://czzbyiyicvjcorsepbfp.supabase.co # ? This is just my project URL
+        audience:
+          - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6emJ5aXlpY3ZqY29yc2VwYmZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzQ1MTExNjgsImV4cCI6MTk5MDA4NzE2OH0.y06BXLuGUGK4HbOq6seg2l6ndzbbG46-NjOzGj2xRJo # I'm using the public API key
+    cors: true
 
 custom:
   tableName: Crossword-Solutions
@@ -17,3 +29,13 @@ functions:
           path: /crossword/allCrosswords
           method: GET
           integration: lambda-proxy
+  writeCrosswordInfo:
+    handler: dist/crossword/writeCrosswordInfo/httpHandler.writeCrosswordInfo
+    events:
+      - httpApi:
+          timeout: 10
+          path: /crossword/writeCrossword
+          method: POST
+          integration: lambda-proxy
+          authorizer:
+            name:

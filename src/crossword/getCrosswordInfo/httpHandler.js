@@ -13,6 +13,7 @@ export async function getCrosswordInfo() {
     const response = buildSuccessResponse(data);
     return response;
   } catch (e) {
+    console.error('server broke');
     return buildErrorResponse(httpStatus.INTERNAL_ERROR);
   }
 }

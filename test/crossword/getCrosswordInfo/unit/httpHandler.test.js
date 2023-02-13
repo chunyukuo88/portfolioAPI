@@ -4,7 +4,7 @@ import { httpStatus } from '../../../../src/common/http';
 
 beforeEach(() => {
   jest.clearAllMocks();
-})
+});
 
 const mockCrosswordData = [
   { id: 1, solution: 'abcd'},
