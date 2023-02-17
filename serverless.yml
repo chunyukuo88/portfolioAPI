@@ -14,7 +14,7 @@ provider:
         identitySource: $request.header.Authorization
         issuerUrl: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_8XqxLcWFP
         audience:
-          - 3t6chkehj792fi7fgcb4kaf42f
+          - 2cbsuopm63g2gopfvjl35vt6mi
     cors: true
 
 custom:
