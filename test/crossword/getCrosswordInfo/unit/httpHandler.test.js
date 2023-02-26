@@ -70,6 +70,11 @@ describe('getCrosswordInfo/httpHandler()', () => {
       it('THEN: It returns an HTTP response object containing a status code of 500.', async () => {
         const expectedResponse = {
           statusCode: httpStatus.INTERNAL_ERROR,
+          body: JSON.stringify({
+            error: {
+              errorMessage: 'Invalid Request',
+            },
+          }),
         };
 
         const response = await getCrosswordInfo();

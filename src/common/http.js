@@ -15,4 +15,11 @@ export const buildSuccessResponse = (data) => ({
   },
 });
 
-export const buildErrorResponse = (statusCode) => ({ statusCode });
+export const buildErrorResponse = (statusCode) => ({
+  statusCode,
+  body: JSON.stringify({
+    error: {
+      errorMessage: 'Invalid Request',
+    },
+  }),
+});

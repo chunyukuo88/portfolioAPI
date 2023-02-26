@@ -15,6 +15,7 @@ const mockCrosswordData = {
 
 beforeEach(() => {
   jest.clearAllMocks();
+  jest.spyOn(console, 'log').mockImplementation(jest.fn());
 });
 
 describe('getSingleCrossword()', () => {
@@ -37,7 +38,6 @@ describe('getSingleCrossword()', () => {
         expect(spy).toBeCalledWith('getSingleCrossword()');
       });
       it('THEN: returns an HTTP response object containing the most recent crossword object from Supabase.', async () => {
-        jest.spyOn(console, 'log').mockImplementation(jest.fn());
         const expectedResponse = {
           statusCode: httpStatus.SUCCESSFUL,
           body: JSON.stringify(mockCrosswordData),
@@ -49,6 +49,40 @@ describe('getSingleCrossword()', () => {
           },
         };
 
+        const response = await getSingleCrossword();
+
+        expect(response).toStrictEqual(expectedResponse);
+      });
+    });
+  });
+  describe('WHEN: there are problems with the database,', () => {
+    describe('WHEN: given a request to access the latest crossword\'s info,', () => {
+      const mockError = new Error('error');
+      beforeEach(() => {
+        const supabaseClientMock = {
+          from: jest.fn().mockReturnThis(),
+          select: jest.fn().mockReturnThis(),
+          order: jest.fn().mockReturnThis(),
+          limit:  jest.fn().mockRejectedValueOnce(mockError),
+        };
+        jest.spyOn(getClient, 'getSupabaseClient').mockReturnValueOnce(supabaseClientMock);
+      });
+      test('THEN: It logs the errror', async () => {
+        const spy = jest.spyOn(console, 'log').mockImplementationOnce(jest.fn());
+
+        await getSingleCrossword();
+
+        expect(spy).toBeCalledWith(mockError);
+      });
+      test('THEN: it throws an error', async () => {
+        const expectedResponse = {
+          statusCode: httpStatus.INTERNAL_ERROR,
+          body: JSON.stringify({
+            error: {
+              errorMessage: 'Invalid Request',
+            },
+          }),
+        };
         const response = await getSingleCrossword();
 
         expect(response).toStrictEqual(expectedResponse);
