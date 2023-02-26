@@ -4,16 +4,23 @@ import {
   buildSuccessResponse,
   httpStatus,
 } from '../../common/http';
+import * as dotenv from 'dotenv';
 
-export async function getCrosswordInfo() {
-  console.log('getCrosswordInfo()');
+dotenv.config();
+
+export async function getSingleCrossword(){
+  console.log('getSingleCrossword()');
   const supabase = getSupabaseClient();
   try {
-    const { data } = await supabase.from(process.env.SUPABASE_CROSSWORD_TABLE).select('*');
+    const { data } = await supabase
+      .from(process.env.SUPABASE_CROSSWORD_TABLE)
+      .select('*')
+      .order('id', { ascending: false })
+      .limit(1);
     const response = buildSuccessResponse(data);
     return response;
   } catch (e) {
-    console.error('server broke');
+    console.log(e);
     return buildErrorResponse(httpStatus.INTERNAL_ERROR);
   }
 }

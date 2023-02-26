@@ -29,6 +29,14 @@ functions:
           path: /crossword/allCrosswords
           method: GET
           integration: lambda-proxy
+  getSingleCrossword:
+    handler: dist/crossword/getSingleCrossword/httpHandler.getSingleCrossword
+    events:
+      - httpApi:
+          timeout: 10
+          path: /crossword/singleCrossword
+          method: GET
+          integration: lambda-proxy
   writeCrosswordInfo:
     handler: dist/crossword/writeCrosswordInfo/httpHandler.writeCrosswordInfo
     events:

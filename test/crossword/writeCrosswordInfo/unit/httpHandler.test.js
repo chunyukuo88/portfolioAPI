@@ -25,7 +25,6 @@ const validHttpRequest = {
 };
 describe('writeCrosswordInfo/httpHandler()', () => {
   describe('GIVEN: a request containing valid data', () => {
-
     describe('WHEN: this function is invoked,', () => {
       let consoleSpy;
       beforeEach(() => {
@@ -72,6 +71,11 @@ describe('writeCrosswordInfo/httpHandler()', () => {
     `('THEN: returns an error response with a 422 status', async ({ invalidBodyValue }) => {
       const expectedResult = {
         statusCode: httpStatus.MISSING_ARGUMENT,
+        body: JSON.stringify({
+          error: {
+            errorMessage: 'Invalid Request',
+          },
+        }),
       };
       const invalidHttpRequest = {
         pathParameters: {},
@@ -99,8 +103,14 @@ describe('writeCrosswordInfo/httpHandler()', () => {
       consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn());
     });
     it('THEN: returns an error response with a 500 status', async () => {
-      const expectedResult = {};
-      expectedResult.statusCode = httpStatus.INTERNAL_ERROR;
+      const expectedResult = {
+        statusCode: httpStatus.INTERNAL_ERROR,
+        body: JSON.stringify({
+          error: {
+            errorMessage: 'Invalid Request',
+          },
+        }),
+      };
 
       const result = await writeCrosswordInfo(validHttpRequest);
 

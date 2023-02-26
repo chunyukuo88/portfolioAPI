@@ -64,14 +64,17 @@ describe('getCrosswordInfo/httpHandler()', () => {
       jest.spyOn(supabaseClientMock, 'select').mockRejectedValueOnce({ error: 'Some error from Supabase' });
       jest.spyOn(getClient, 'getSupabaseClient').mockReturnValueOnce(supabaseClientMock);
     });
-    const consoleSpy = jest
-      .spyOn(console, 'log')
-      .mockImplementation(jest.fn());
+    jest.spyOn(console, 'error').mockImplementation(jest.fn());
 
     describe('WHEN: This handler is invoked,', () => {
       it('THEN: It returns an HTTP response object containing a status code of 500.', async () => {
         const expectedResponse = {
           statusCode: httpStatus.INTERNAL_ERROR,
+          body: JSON.stringify({
+            error: {
+              errorMessage: 'Invalid Request',
+            },
+          }),
         };
 
         const response = await getCrosswordInfo();
