@@ -1,11 +1,11 @@
-import { Client, Entity, Schema, Repository } from 'redis-om';
+import { Client, Entity, Schema } from 'redis-om';
 
 const blogSchemaDef = {
-  title: { type: 'string'},
-  theme: { type: 'string'},
+  title:    { type: 'string'},
+  theme:    { type: 'string'},
   imageUrl: { type: 'string'},
-  likes: { type: 'number'},
-  views: { type: 'number'},
+  likes:    { type: 'number'},
+  views:    { type: 'number'},
 };
 const blogSchemaOptions = { dataStructure: 'JSON' };
 
