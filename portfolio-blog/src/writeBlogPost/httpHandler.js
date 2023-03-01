@@ -13,5 +13,5 @@ export async function writeBlogPost(httpRequest) {
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Methods': '*',
     },
-  }
+  };
 }
