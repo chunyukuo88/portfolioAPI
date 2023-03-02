@@ -1,6 +1,7 @@
 import { getClient, getRepository, getSchema } from './factory';
 
 export async function createPost(data) {
+  console.log('createPost()');
   const client = getClient();
   await client.open(process.env.REDIS_PUBLIC_DB);
   const schema = getSchema();
