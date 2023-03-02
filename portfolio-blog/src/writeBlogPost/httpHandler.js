@@ -1,12 +1,10 @@
-// import { createPost } from './controller';
 import { httpStatus } from '../common/http';
-import { doTheThing } from './doTheThing';
+import { createEntry } from './createEntry';
 
 export async function writeBlogPost(httpRequest) {
   console.log('writeBlogPost - handler() 1/2');
   const blogData = JSON.parse(httpRequest.body);
-  // const id = await createPost(blogData);
-  const entity = await doTheThing(blogData);
+  const entity = await createEntry(blogData);
   console.log('writeBlogPost - handler() 2/2');
   return {
     statusCode: httpStatus.SUCCESSFUL,
