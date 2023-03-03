@@ -1,9 +1,24 @@
-import { Client, Entity, Schema } from 'redis-om';
 import { createEntry } from './createEntry';
+import { getRepository } from '../common/repository';
+
+jest.mock('../common/repository');
 
 describe('GIVEN: valid blog data,', () => {
   describe('WHEN: this function is invoked,', () => {
     it('THEN: it returns a new blog entity, which is returned to the handler.', async () => {
+      const mockBlogEntity = {
+        foo: 'bar',
+      };
+      getRepository.mockReturnValueOnce({
+        blogPostRepository: {
+          createAndSave: () => {
+            return mockBlogEntity;
+          },
+        },
+        client: {
+          close: jest.fn(),
+        },
+      });
       const blogData = {
         title: 'test',
         theme: 'test',
@@ -14,7 +29,7 @@ describe('GIVEN: valid blog data,', () => {
 
       const result = await createEntry(blogData);
 
-      expect(result).toBeInstanceOf(Entity);
+      expect(result).toEqual(mockBlogEntity);
     });
   });
 });
