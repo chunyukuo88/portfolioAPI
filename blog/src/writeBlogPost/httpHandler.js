@@ -1,10 +1,9 @@
 import {
   buildErrorResponse,
   buildSuccessResponse,
-  httpStatus
+  httpStatus,
 } from '../common/http';
 import { createEntry } from './createEntry';
-
 
 export async function writeBlogPost(httpRequest) {
   const { log, error } = console;
