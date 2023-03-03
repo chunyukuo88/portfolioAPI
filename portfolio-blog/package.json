@@ -1,0 +1,56 @@
+{
+  "name": "portfolio-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --colors --silent",
+    "build": "npm run lint && babel src -d dist",
+    "lint": "prettier --write src && eslint src --fix",
+    "deploy-offline": "npm run build && serverless offline start --stage offline",
+    "deploy-prod": "npm run build && serverless deploy --stage prod",
+    "deploy-dev": "npm run build && serverless deploy --stage dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chunyukuo88/portfolioAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chunyukuo88/portfolioAPI/issues"
+  },
+  "homepage": "https://github.com/chunyukuo88/portfolioAPI#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.20.13",
+    "@supabase/supabase-js": "^2.7.1",
+    "aws-sdk": "^2.1313.0",
+    "dotenv": "^16.0.3",
+    "redis": "^4.6.5",
+    "redis-om": "^0.3.6"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/eslint-parser": "^7.15.4",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@shelf/jest-dynamodb": "^3.3.1",
+    "amazon-cognito-identity-js": "^5.2.10",
+    "aws-sdk-client-mock": "^1.0.0",
+    "babel-jest": "^27.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "esrecurse": "^4.3.0",
+    "jest": "^27.0.6",
+    "node-fetch": "^2.6.7",
+    "prettier": "^2.7.1",
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-offline": "^8.3.1"
+  }
+}

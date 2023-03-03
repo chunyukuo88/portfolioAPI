@@ -1,0 +1,1 @@
+The endpoints related to the blog function.

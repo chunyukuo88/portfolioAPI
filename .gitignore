@@ -1,9 +1,13 @@
 # package directories
-node_modules
 jspm_packages
 
-# Serverless directories
-.serverless
-.idea
-coverage
-dist
+# Serverless directories/
+portfolio-blog/node_modules/
+portfolio-blog/.serverless/
+portfolio-blog/coverage/
+portfolio-blog/dist/
+crossword/node_modules/
+crossword/.serverless/
+crossword/coverage/
+crossword/dist/
+./idea

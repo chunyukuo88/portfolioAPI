@@ -1,0 +1,33 @@
+service: portfolio-blog
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    NODE_ENV: ${opt:stage}
+    Table_NAME: HowzitHoozle-free-db
+  httpApi:
+    authorizers:
+      cognitoAuthorizer:
+        type: jwt
+        identitySource: $request.header.Authorization
+        issuerUrl: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_8XqxLcWFP
+        audience:
+          - 2cbsuopm63g2gopfvjl35vt6mi
+    cors: true
+
+custom:
+  tableName: HowzitHoozle-free-db
+
+functions:
+  writeBlogPost:
+    handler: dist/writeBlogPost/httpHandler.writeBlogPost
+    events:
+      - httpApi:
+          timeout: 10
+          path: /blog/write
+          method: POST
+          integration: lambda-proxy
+          authorizer:
+            name: cognitoAuthorizer
