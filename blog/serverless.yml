@@ -1,4 +1,4 @@
-service: portfolio-blog
+service: blog
 frameworkVersion: '3'
 
 provider:
