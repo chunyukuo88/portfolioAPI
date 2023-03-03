@@ -1,0 +1,13 @@
+# package directories
+jspm_packages
+
+# Serverless directories
+portfolio-blog/node_modules
+portfolio-blog/.serverless
+portfolio-blog/coverage/
+portfolio-blog/dist/
+crossword/node_modules
+crossword/.serverless
+crossword/coverage/
+crossword/dist/
+./idea
