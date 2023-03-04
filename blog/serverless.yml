@@ -22,7 +22,7 @@ custom:
 
 functions:
   getAllEntries:
-    handler: dist/getBlogPosts/httpHandler.getAllEntries
+    handler: dist/getBlogPosts/httpHandler.handler
     events:
       - httpApi:
           timeout: 10
