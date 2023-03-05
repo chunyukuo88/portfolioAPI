@@ -31,9 +31,7 @@ functions:
     handler: dist/writeBlogPost/httpHandler.writeBlogPost
     events:
       - httpApi:
-          timeout: 10
           path: /blog/write
           method: POST
-          integration: lambda-proxy
           authorizer:
             name: cognitoAuthorizer
