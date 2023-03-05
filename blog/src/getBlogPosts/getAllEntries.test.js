@@ -1,36 +1,46 @@
-import { getAllEntries } from "./getAllEntries";
-import { getRepository } from "../common/repository";
+import { getAllEntries } from './getAllEntries';
+import { getRepository } from '../common/repository';
 
-jest.mock("../common/repository");
+jest.mock('../common/repository', () => ({
+  getRepository: jest.fn(),
+}));
 
-describe("getAllEntries/0", () => {
-  describe("GIVEN: There are no problems with the Redis server,", () => {
-    describe("WHEN: this function is invoked,", () => {
-      it("THEN: returns an array of blog entry objects.", async () => {
-        let expectedResult;
-        getRepository.mockReturnValueOnce({
+
+describe('getAllEntries/0', () => {
+  describe('GIVEN: There are no problems with the Redis server,', () => {
+    describe('WHEN: this function is invoked,', () => {
+      it('THEN: returns an array of blog entry objects.', async () => {
+        const mockBlogEntries = [
+          {
+            entityId: '01GTM5P7XKK1DFEGACMBZNDH4K',
+            imageUrl: '',
+            likes: 0,
+            theme: 'On rice, dipped in cheese',
+            title: 'Roast potatoes',
+            views: 0,
+          },
+          {
+            entityId: '01GTM5P7XKK1DFEGACMBZNDH4J',
+            imageUrl: '',
+            likes: 0,
+            theme: 'A fine day to write a blog, wot wot',
+            title: 'Bloggimus',
+            views: 0,
+          },
+        ];
+        const searchMock = jest.fn().mockReturnThis();
+        const allMock = jest.fn().mockResolvedValue(mockBlogEntries);
+        const createIndexMock = jest.fn().mockResolvedValue(undefined);
+
+        getRepository.mockResolvedValue({
           blogPostRepository: {
-            fetch: async () => {
-              expectedResult = [
-                {
-                  entityId: "01GTM5P7XKK1DFEGACMBZNDH4K",
-                  imageUrl: "",
-                  likes: 0,
-                  theme: "On rice, dipped in cheese",
-                  title: "Roast potatoes",
-                  views: 0,
-                },
-                {
-                  entityId: "01GTM5P7XKK1DFEGACMBZNDH4J",
-                  imageUrl: "",
-                  likes: 0,
-                  theme: "A fine day to write a blog, wot wot",
-                  title: "Bloggimus",
-                  views: 0,
-                },
-              ];
-              return expectedResult;
-            },
+            search: () => ({
+              return: {
+                all: allMock,
+              },
+              search: searchMock,
+            }),
+            createIndex: createIndexMock,
           },
           client: {
             close: jest.fn(),
@@ -39,7 +49,7 @@ describe("getAllEntries/0", () => {
 
         const result = await getAllEntries();
 
-        expect(result).toEqual(expectedResult);
+        expect(result).toEqual(mockBlogEntries);
       });
     });
   });
