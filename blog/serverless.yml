@@ -25,10 +25,8 @@ functions:
     handler: dist/getBlogPosts/httpHandler.handler
     events:
       - httpApi:
-          timeout: 10
           path: /blog/getAll
           method: GET
-          integration: lambda-proxy
   writeBlogPost:
     handler: dist/writeBlogPost/httpHandler.writeBlogPost
     events:

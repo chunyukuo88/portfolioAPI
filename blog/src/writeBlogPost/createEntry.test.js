@@ -1,13 +1,13 @@
-import { createEntry } from './createEntry';
-import { getRepository } from '../common/repository';
+import { createEntry } from "./createEntry";
+import { getRepository } from "../common/repository";
 
-jest.mock('../common/repository');
+jest.mock("../common/repository");
 
-describe('GIVEN: valid blog data,', () => {
-  describe('WHEN: this function is invoked,', () => {
-    it('THEN: it returns a new blog entity, which is returned to the handler.', async () => {
+describe("GIVEN: valid blog data,", () => {
+  describe("WHEN: this function is invoked,", () => {
+    it("THEN: it returns a new blog entity, which is returned to the handler.", async () => {
       const mockBlogEntity = {
-        foo: 'bar',
+        foo: "bar",
       };
       getRepository.mockReturnValueOnce({
         blogPostRepository: {
@@ -20,9 +20,9 @@ describe('GIVEN: valid blog data,', () => {
         },
       });
       const blogData = {
-        title: 'test',
-        theme: 'test',
-        imageUrl: 'test',
+        title: "test",
+        theme: "test",
+        imageUrl: "test",
         likes: 0,
         views: 0,
       };
