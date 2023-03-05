@@ -2,10 +2,10 @@
 jspm_packages
 
 # Serverless directories/
-portfolio-blog/node_modules/
-portfolio-blog/.serverless/
-portfolio-blog/coverage/
-portfolio-blog/dist/
+blog/node_modules/
+blog/.serverless/
+blog/coverage/
+blog/dist/
 crossword/node_modules/
 crossword/.serverless/
 crossword/coverage/

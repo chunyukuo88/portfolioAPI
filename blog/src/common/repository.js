@@ -24,15 +24,8 @@ async function getClient() {
   return client;
 }
 
-async function getRepository() {
+export async function getRepository() {
   const client = await getClient();
   const blogPostRepository = client.fetchRepository(blogPostSchema);
   return { blogPostRepository, client };
-}
-
-export async function createEntry(blogData) {
-  const { blogPostRepository, client } = await getRepository();
-  const newEntity = await blogPostRepository.createAndSave(blogData);
-  await client.close();
-  return newEntity;
 }
