@@ -28,19 +28,15 @@ describe('getAllEntries/0', () => {
             views: 0,
           },
         ];
-        const searchMock = jest.fn().mockReturnThis();
-        const allMock = jest.fn().mockResolvedValue(mockBlogEntries);
-        const createIndexMock = jest.fn().mockResolvedValue(undefined);
-
         getRepository.mockResolvedValue({
           blogPostRepository: {
             search: () => ({
               return: {
-                all: allMock,
+                all: () => mockBlogEntries,
               },
-              search: searchMock,
+              search: jest.fn().mockReturnThis(),
             }),
-            createIndex: createIndexMock,
+            createIndex: jest.fn(),
           },
           client: {
             close: jest.fn(),
