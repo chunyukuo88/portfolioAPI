@@ -33,6 +33,7 @@ functions:
       - httpApi:
           path: /blog/delete/{id}
           method: DELETE
+          # add authorizer once I get this to work.
   writeBlogPost:
     handler: dist/writeBlogPost/httpHandler.writeBlogPost
     events:
