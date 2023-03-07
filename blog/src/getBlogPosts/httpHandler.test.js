@@ -8,7 +8,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe("getAllEntries/0", () => {
+describe("handler/0", () => {
   describe("GIVEN: there are no problems with the Redis server,", () => {
     describe("WHEN: this function is invoked with a valid HTTP request,", () => {
       it("THEN: it returns a success response.", async () => {

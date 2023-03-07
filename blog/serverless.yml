@@ -27,6 +27,14 @@ functions:
       - httpApi:
           path: /blog/getAll
           method: GET
+  deleteEntry:
+    handler: dist/deleteBlogPost/httpHandler.handler
+    events:
+      - httpApi:
+          path: /blog/delete/{id}
+          method: DELETE
+          authorizer:
+            name: cognitoAuthorizer
   writeBlogPost:
     handler: dist/writeBlogPost/httpHandler.writeBlogPost
     events:
