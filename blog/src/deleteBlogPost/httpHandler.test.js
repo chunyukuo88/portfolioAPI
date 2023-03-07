@@ -1,8 +1,8 @@
-import { errorMessages, httpStatus, standardHeaders } from '../common/http';
-import { handler } from './httpHandler';
-import { deletePost } from './deletePost';
+import { errorMessages, httpStatus, standardHeaders } from "../common/http";
+import { handler } from "./httpHandler";
+import { deletePost } from "./deletePost";
 
-jest.mock('./deletePost');
+jest.mock("./deletePost");
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -10,21 +10,21 @@ afterEach(() => {
 
 let logSpy, errorSpy;
 beforeAll(() => {
-  logSpy = jest.spyOn(console, 'log').mockImplementation(jest.fn());
-  errorSpy = jest.spyOn(console, 'error').mockImplementation(jest.fn());
+  logSpy = jest.spyOn(console, "log").mockImplementation(jest.fn());
+  errorSpy = jest.spyOn(console, "error").mockImplementation(jest.fn());
 });
 const validRequest = {
-  pathParameters: 'BlogPost:01GTJJTGBTCA1CV7EGPDD6FFT0',
+  pathParameters: "BlogPost:01GTJJTGBTCA1CV7EGPDD6FFT0",
 };
-describe('handler/0', () => {
-  describe('GIVEN: there are no problems with the Redis server,', () => {
-    describe('WHEN: this function is invoked with a valid HTTP request,', () => {
-      it('THEN: it invokes its logger function.', async () => {
+describe("handler/0", () => {
+  describe("GIVEN: there are no problems with the Redis server,", () => {
+    describe("WHEN: this function is invoked with a valid HTTP request,", () => {
+      it("THEN: it invokes its logger function.", async () => {
         await handler(validRequest);
 
-        expect(logSpy).toBeCalledWith('deleteBlogPost.handler()');
+        expect(logSpy).toBeCalledWith("deleteBlogPost.handler()");
       });
-      it('THEN: it returns a success response.', async () => {
+      it("THEN: it returns a success response.", async () => {
         deletePost.mockReturnValueOnce(validRequest.pathParameters);
         const expectedResponse = {
           statusCode: httpStatus.SUCCESSFUL,
@@ -38,17 +38,17 @@ describe('handler/0', () => {
       });
     });
   });
-  describe('WHEN: The Redis server is on the fritz', () => {
-    const mockError = new Error('Redis is broken');
+  describe("WHEN: The Redis server is on the fritz", () => {
+    const mockError = new Error("Redis is broken");
     beforeEach(() => {
       deletePost.mockRejectedValueOnce(mockError);
     });
-    it('THEN: returns an error response.', async () => {
+    it("THEN: returns an error response.", async () => {
       await handler(validRequest);
 
       expect(errorSpy).toBeCalledWith(mockError);
     });
-    it('THEN: returns an error response.', async () => {
+    it("THEN: returns an error response.", async () => {
       const expectedResponse = {
         statusCode: httpStatus.INTERNAL_ERROR,
         body: JSON.stringify({
