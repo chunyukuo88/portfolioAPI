@@ -1,13 +1,18 @@
 import {
-  // buildErrorResponse,
+  buildErrorResponse,
   buildSuccessResponse,
-  // httpStatus,
+  httpStatus,
 } from '../common/http';
 import { deletePost } from './deletePost';
 
 export async function handler(httpRequest) {
-  const { log } = console;
-  log('deleteBlogPost.handler()');
-  const response = await deletePost(httpRequest);
-  return buildSuccessResponse(response);
+  const { log, error } = console;
+  try {
+    const response = await deletePost(httpRequest);
+    log('deleteBlogPost.handler()');
+    return buildSuccessResponse(response);
+  } catch (e) {
+    error(e);
+    return buildErrorResponse(httpStatus.INTERNAL_ERROR);
+  }
 }
