@@ -7,6 +7,8 @@
     "test": "jest --coverage --colors --silent",
     "build": "npm run lint && babel src -d dist",
     "lint": "prettier --write src && eslint src --fix",
+    "list-endpoints-prod": "serverless info --stage prod",
+    "list-endpoints-dev": "serverless info --stage dev",
     "deploy-offline": "npm run build && serverless offline start --stage offline",
     "deploy-prod": "npm run build && serverless deploy --stage prod",
     "deploy-dev": "npm run build && serverless deploy --stage dev"
