@@ -11,7 +11,8 @@ export async function getCrosswordInfo() {
   try {
     const { data } = await supabase
       .from(process.env.SUPABASE_CROSSWORD_TABLE)
-      .select('*');
+      .select('*')
+      .order('created_at', { ascending: false });
     const response = buildSuccessResponse(data);
     return response;
   } catch (e) {
