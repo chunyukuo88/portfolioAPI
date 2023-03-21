@@ -20,7 +20,8 @@ describe('getCrosswordInfo/httpHandler()', () => {
         select: jest.fn().mockResolvedValueOnce({ data: mockCrosswordData }),
       };
       jest.spyOn(supabaseClientMock, 'from').mockReturnThis();
-      jest.spyOn(supabaseClientMock, 'select').mockResolvedValueOnce({ data: mockCrosswordData });
+      jest.spyOn(supabaseClientMock, 'select').mockReturnThis();
+      jest.spyOn(supabaseClientMock, 'order').mockResolvedValueOnce({ data: mockCrosswordData });
       jest.spyOn(getClient, 'getSupabaseClient').mockReturnValueOnce(supabaseClientMock);
     });
     const consoleSpy = jest
