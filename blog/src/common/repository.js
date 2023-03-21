@@ -10,6 +10,7 @@ const blogSchemaOptions = { dataStructure: 'JSON' };
 const blogPostSchema = new Schema(
   BlogPost,
   {
+    creationTimeStamp: { type: 'number' },
     title: { type: 'string' },
     theme: { type: 'string' },
     imageUrl: { type: 'string' },
