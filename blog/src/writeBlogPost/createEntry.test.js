@@ -21,6 +21,7 @@ describe("GIVEN: valid blog data,", () => {
       });
       const blogData = {
         title: "test",
+        creationTimeStamp: '1679409635239',
         theme: "test",
         imageUrl: "test",
         likes: 0,
