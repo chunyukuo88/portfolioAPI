@@ -20,15 +20,18 @@ describe('getByPage/1', function () {
                        page: 2,
                    },
                ];
+
                getRepository.mockResolvedValue({
                    blogPostRepository: {
+                       createIndex: jest.fn(),
                        search: () => ({
+                           where: jest.fn().mockReturnThis(),
+                           eq: jest.fn().mockReturnThis(),
                            return: {
                                all: () => mockBlogEntries,
                            },
                            search: jest.fn().mockReturnThis(),
                        }),
-                       createIndex: jest.fn(),
                    },
                    client: {
                        close: jest.fn(),
