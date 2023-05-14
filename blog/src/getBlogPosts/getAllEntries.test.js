@@ -17,6 +17,7 @@ describe("getAllEntries/0", () => {
             theme: "On rice, dipped in cheese",
             title: "Roast potatoes",
             views: 0,
+            page: 1,
           },
           {
             entityId: "01GTM5P7XKK1DFEGACMBZNDH4J",
@@ -25,17 +26,18 @@ describe("getAllEntries/0", () => {
             theme: "A fine day to write a blog, wot wot",
             title: "Bloggimus",
             views: 0,
+            page: 1,
           },
         ];
         getRepository.mockResolvedValue({
           blogPostRepository: {
+            createIndex: jest.fn(),
             search: () => ({
               return: {
                 all: () => mockBlogEntries,
               },
               search: jest.fn().mockReturnThis(),
             }),
-            createIndex: jest.fn(),
           },
           client: {
             close: jest.fn(),
