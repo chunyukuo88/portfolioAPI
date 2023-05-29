@@ -1,5 +1,6 @@
 import { deletePost } from "./deletePost";
 import { getRepository } from "../common/repository";
+import {buildErrorResponse, buildSuccessResponse, httpStatus} from "../common/http";
 
 jest.mock("../common/repository");
 
@@ -37,7 +38,7 @@ describe("deletePost/1", () => {
 
         const result = await deletePost(blogPostId);
 
-        expect(result).toEqual(blogPostId);
+        expect(result).toEqual(buildSuccessResponse(blogPostId));
       });
     });
   });
@@ -63,7 +64,7 @@ describe("deletePost/1", () => {
 
         const result = await deletePost(blogPostId);
 
-        expect(result).toEqual(expectedError);
+        expect(result).toEqual(buildErrorResponse(httpStatus.INTERNAL_ERROR));
       });
       it("THEN: It logs the error", async () => {
         const blogPostId = "__some invalid id__";

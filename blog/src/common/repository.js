@@ -16,6 +16,7 @@ const blogPostSchema = new Schema(
     imageUrl: { type: 'string' },
     likes: { type: 'number' },
     views: { type: 'number' },
+    page: { type: 'number' },
   },
   blogSchemaOptions,
 );

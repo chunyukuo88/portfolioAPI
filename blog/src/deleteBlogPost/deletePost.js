@@ -1,3 +1,8 @@
+import {
+  buildErrorResponse,
+  buildSuccessResponse,
+  httpStatus,
+} from '../common/http';
 import { getRepository } from '../common/repository';
 
 export async function deletePost(blogPostId) {
@@ -7,9 +12,9 @@ export async function deletePost(blogPostId) {
     await blogPostRepository.remove(blogPostId);
     await client.close();
     log('deletePost()');
-    return blogPostId;
+    return buildSuccessResponse(blogPostId);
   } catch (e) {
     error(e);
-    return new Error('There was a problem removing the blog post.');
+    return buildErrorResponse(httpStatus.INTERNAL_ERROR);
   }
 }
