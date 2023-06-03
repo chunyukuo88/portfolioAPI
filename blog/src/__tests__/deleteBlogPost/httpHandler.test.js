@@ -1,8 +1,8 @@
-import { errorMessages, httpStatus, standardHeaders } from "../common/http";
-import { handler } from "./httpHandler";
-import { deletePost } from "./deletePost";
+import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
+import { handler } from "../../deleteBlogPost/httpHandler";
+import { deletePost } from "../../deleteBlogPost/deletePost";
 
-jest.mock("./deletePost");
+jest.mock("../../deleteBlogPost/deletePost");
 
 afterEach(() => {
   jest.clearAllMocks();

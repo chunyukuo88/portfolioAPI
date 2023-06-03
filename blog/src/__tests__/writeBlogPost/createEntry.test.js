@@ -152,9 +152,7 @@ describe('createEntry()', () => {
   });
   describe('GIVEN: A problem with the database server,', () => {
     describe('WHEN: given otherwise valid data,', () => {
-      const expectedError = new Error(
-        'There was a problem removing the blog post.'
-      );
+      const expectedError = new Error('There was a problem removing the blog post.');
       beforeEach(() => {
         getRepository.mockRejectedValue(expectedError);
       });
@@ -165,6 +163,7 @@ describe('createEntry()', () => {
       });
       it('THEN: It invokes the console.error() method with a concatenated error message.', async () => {
         const expectedErrorMsg = `createEntry() - the error: ${expectedError}`;
+
         await createEntry(validBlogData);
 
         expect(console.error).toBeCalledTimes(1);

@@ -3,6 +3,8 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+// TODO: Not a todo. This is copied directly from redis-om, so I have excluded it from coverage.
+
 class BlogPost extends Entity {}
 
 const blogSchemaOptions = { dataStructure: 'JSON' };
