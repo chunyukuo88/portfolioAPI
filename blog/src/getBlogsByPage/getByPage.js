@@ -7,8 +7,7 @@ export async function getByPage(pageNumber) {
     .search()
     .where('page')
     .eq(pageNumber)
-    .return
-    .all();
+    .return.all();
   await client.close();
   return specificBlogEntries;
 }

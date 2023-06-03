@@ -1,13 +1,10 @@
 import { getRepository } from '../common/repository';
 import { buildErrorResponse, httpStatus } from '../common/http';
 
-const invalidData = (blogData) => (
-  !blogData
+const invalidData = (blogData) => !blogData
   || !blogData.title
   || !blogData.creationTimeStamp
-  || !blogData.theme
-  || !blogData.imageUrl
-);
+  || !blogData.theme;
 
 export async function createEntry(blogData) {
   console.log('createEntry()');

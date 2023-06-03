@@ -1,6 +1,10 @@
 import { deletePost } from "../../deleteBlogPost/deletePost";
-import { getRepository} from "../../common/repository";
-import { buildErrorResponse, buildSuccessResponse, httpStatus } from "../../common/http";
+import { getRepository } from "../../common/repository";
+import {
+  buildErrorResponse,
+  buildSuccessResponse,
+  httpStatus,
+} from "../../common/http";
 
 jest.mock("../../common/repository");
 
