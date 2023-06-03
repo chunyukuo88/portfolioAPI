@@ -1,5 +1,11 @@
 module.exports = {
   verbose: true,
-  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  coveragePathIgnorePatterns: [
+    './src/common/repository.js',
+  ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/',
+  ],
   setupFiles: ['dotenv/config'],
 };

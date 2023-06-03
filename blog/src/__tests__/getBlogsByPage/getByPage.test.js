@@ -1,7 +1,7 @@
-import { getByPage } from "./getByPage";
-import { getRepository } from "../common/repository";
+import { getByPage } from "../../getBlogsByPage/getByPage";
+import { getRepository } from "../../common/repository";
 
-jest.mock("../common/repository", () => ({
+jest.mock("../../common/repository", () => ({
     getRepository: jest.fn(),
 }));
 

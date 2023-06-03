@@ -1,10 +1,11 @@
-import { deletePost } from "./deletePost";
-import { getRepository } from "../common/repository";
-import {buildErrorResponse, buildSuccessResponse, httpStatus} from "../common/http";
+import { deletePost } from "../../deleteBlogPost/deletePost";
+import { getRepository} from "../../common/repository";
+import { buildErrorResponse, buildSuccessResponse, httpStatus } from "../../common/http";
 
-jest.mock("../common/repository");
+jest.mock("../../common/repository");
 
 let log, error;
+
 beforeAll(() => {
   log = jest.spyOn(console, "log").mockImplementation(jest.fn());
   error = jest.spyOn(console, "error").mockImplementation(jest.fn());

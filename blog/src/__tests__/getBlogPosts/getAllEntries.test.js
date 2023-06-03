@@ -1,7 +1,7 @@
-import { getAllEntries } from "./getAllEntries";
-import { getRepository } from "../common/repository";
+import { getAllEntries } from "../../getBlogPosts/getAllEntries";
+import { getRepository } from "../../common/repository";
 
-jest.mock("../common/repository", () => ({
+jest.mock("../../common/repository", () => ({
   getRepository: jest.fn(),
 }));
 
