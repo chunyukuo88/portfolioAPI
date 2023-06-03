@@ -1,8 +1,8 @@
-import { createEntry } from './createEntry';
-import { getRepository } from '../common/repository';
-import { buildErrorResponse, httpStatus } from '../common/http';
+import { createEntry } from "../../writeBlogPost/createEntry";
+import { getRepository } from "../../common/repository";
+import { buildErrorResponse, httpStatus } from "../../common/http";
 
-jest.mock('../common/repository');
+jest.mock('../../common/repository');
 
 jest.spyOn(console, 'log').mockImplementation(jest.fn());
 jest.spyOn(console, 'error').mockImplementation(jest.fn());

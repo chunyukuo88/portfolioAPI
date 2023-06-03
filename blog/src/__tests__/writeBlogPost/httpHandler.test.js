@@ -1,8 +1,8 @@
-import { createEntry } from "./createEntry";
-import { writeBlogPost } from "./httpHandler";
-import { errorMessages, httpStatus, standardHeaders } from "../common/http";
+import { createEntry } from "../../writeBlogPost/createEntry";
+import { writeBlogPost } from "../../writeBlogPost/httpHandler";
+import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
 
-jest.mock("./createEntry");
+jest.mock("../../writeBlogPost/createEntry");
 
 let spy;
 beforeEach(() => {
