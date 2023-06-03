@@ -1,17 +1,28 @@
-import { createEntry } from "./createEntry";
-import { getRepository } from "../common/repository";
-import {buildErrorResponse, httpStatus} from "../common/http";
+import { createEntry } from './createEntry';
+import { getRepository } from '../common/repository';
+import { buildErrorResponse, httpStatus } from '../common/http';
 
-jest.mock("../common/repository");
+jest.mock('../common/repository');
 
 jest.spyOn(console, 'log').mockImplementation(jest.fn());
 
-describe("createEntry()", () => {
-  describe("GIVEN: valid blog data,", () => {
-    describe("WHEN: this function is invoked,", () => {
-      it("THEN: it returns a new blog entity, which is returned to the handler.", async () => {
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
+const blogDataWithMissingFields = {
+  title: 'A valid title',
+  creationTimeStamp: null,
+  theme: undefined,
+  imageUrl: 'www.example.com',
+};
+
+describe('createEntry()', () => {
+  describe('GIVEN: valid blog data,', () => {
+    describe('WHEN: this function is invoked,', () => {
+      it('THEN: it returns a new blog entity, which is returned to the handler.', async () => {
         const mockBlogEntity = {
-          foo: "bar",
+          foo: 'bar',
         };
         getRepository.mockReturnValueOnce({
           blogPostRepository: {
@@ -24,10 +35,10 @@ describe("createEntry()", () => {
           },
         });
         const blogData = {
-          title: "test",
+          title: 'test',
           creationTimeStamp: '1679409635239',
-          theme: "test",
-          imageUrl: "test",
+          theme: 'test',
+          imageUrl: 'test',
           likes: 0,
           views: 0,
         };
@@ -38,12 +49,17 @@ describe("createEntry()", () => {
       });
     });
   });
-  describe("UNHAPPY PATHS: ", () => {
-    describe("GIVEN: missing blog data,", () => {
-      describe("WHEN: this function is invoked,", () => {
-        it("THEN: it returns an error, which is returned to the handler.", async () => {
+  describe.each`
+    blogData
+    ${undefined}
+    ${null}
+    ${blogDataWithMissingFields}
+  `('UNHAPPY PATHS - DATA ', ({ blogData }) => {
+    describe('GIVEN: missing blog data,', () => {
+      describe('WHEN: this function is invoked,', () => {
+        it('THEN: it returns an error, which is returned to the handler.', async () => {
           const expectedError = new Error(
-            "There was a problem removing the blog post."
+            'There was a problem removing the blog post.'
           );
           getRepository.mockReturnValueOnce({
             blogPostRepository: {
@@ -55,7 +71,6 @@ describe("createEntry()", () => {
               close: jest.fn(),
             },
           });
-          const blogData = undefined;
 
           const result = await createEntry(blogData);
 
@@ -63,11 +78,11 @@ describe("createEntry()", () => {
         });
       });
     });
-    describe("GIVEN: null blog data,", () => {
-      describe("WHEN: this function is invoked,", () => {
-        it("THEN: it returns an error, which is returned to the handler.", async () => {
+    describe('GIVEN: null blog data,', () => {
+      describe('WHEN: this function is invoked,', () => {
+        it('THEN: it returns an error, which is returned to the handler.', async () => {
           const expectedError = new Error(
-            "There was a problem removing the blog post."
+            'There was a problem removing the blog post.'
           );
           getRepository.mockReturnValueOnce({
             blogPostRepository: {
@@ -79,7 +94,6 @@ describe("createEntry()", () => {
               close: jest.fn(),
             },
           });
-          const blogData = null;
 
           const result = await createEntry(blogData);
 
@@ -87,11 +101,11 @@ describe("createEntry()", () => {
         });
       });
     });
-    describe("GIVEN: empty blog data,", () => {
-      describe("WHEN: this function is invoked,", () => {
-        it("THEN: it returns an error, which is returned to the handler.", async () => {
+    describe('GIVEN: empty blog data,', () => {
+      describe('WHEN: this function is invoked,', () => {
+        it('THEN: it returns an error, which is returned to the handler.', async () => {
           const expectedError = new Error(
-            "There was a problem removing the blog post."
+            'There was a problem removing the blog post.'
           );
           getRepository.mockReturnValueOnce({
             blogPostRepository: {
@@ -103,7 +117,6 @@ describe("createEntry()", () => {
               close: jest.fn(),
             },
           });
-          const blogData = {};
 
           const result = await createEntry(blogData);
 
@@ -111,11 +124,11 @@ describe("createEntry()", () => {
         });
       });
     });
-    describe("GIVEN: blog data that is not empty but is missing fields,", () => {
-      describe("WHEN: this function is invoked,", () => {
-        it("THEN: it returns an error, which is returned to the handler.", async () => {
+    describe('GIVEN: blog data that is not empty but is missing fields,', () => {
+      describe('WHEN: this function is invoked,', () => {
+        it('THEN: it returns an error, which is returned to the handler.', async () => {
           const expectedError = new Error(
-            "There was a problem removing the blog post."
+            'There was a problem removing the blog post.'
           );
           getRepository.mockReturnValueOnce({
             blogPostRepository: {
@@ -127,12 +140,6 @@ describe("createEntry()", () => {
               close: jest.fn(),
             },
           });
-          const blogData = {
-            title: 'A valid title',
-            creationTimeStamp: null,
-            theme: undefined,
-            imageUrl: 'www.example.com',
-          };
 
           const result = await createEntry(blogData);
 
