@@ -5,10 +5,20 @@ import { buildErrorResponse, httpStatus } from '../common/http';
 jest.mock('../common/repository');
 
 jest.spyOn(console, 'log').mockImplementation(jest.fn());
+jest.spyOn(console, 'error').mockImplementation(jest.fn());
 
 afterEach(() => {
   jest.clearAllMocks();
 });
+
+const validBlogData = {
+  title: 'test',
+  creationTimeStamp: '1679409635239',
+  theme: 'test',
+  imageUrl: 'test',
+  likes: 0,
+  views: 0,
+};
 
 const blogDataWithMissingFields = {
   title: 'A valid title',
@@ -34,16 +44,8 @@ describe('createEntry()', () => {
             close: jest.fn(),
           },
         });
-        const blogData = {
-          title: 'test',
-          creationTimeStamp: '1679409635239',
-          theme: 'test',
-          imageUrl: 'test',
-          likes: 0,
-          views: 0,
-        };
 
-        const result = await createEntry(blogData);
+        const result = await createEntry(validBlogData);
 
         expect(result).toEqual(mockBlogEntity);
       });
@@ -145,6 +147,28 @@ describe('createEntry()', () => {
 
           expect(result).toEqual(buildErrorResponse(httpStatus.MISSING_ARGUMENT));
         });
+      });
+    });
+  });
+  describe('GIVEN: A problem with the database server,', () => {
+    describe('WHEN: given otherwise valid data,', () => {
+      const expectedError = new Error(
+        'There was a problem removing the blog post.'
+      );
+      beforeEach(() => {
+        getRepository.mockRejectedValue(expectedError);
+      });
+      it('THEN: it returns an error, which is returned to the handler.', async () => {
+        const result = await createEntry(validBlogData);
+
+        expect(result).toEqual(buildErrorResponse(httpStatus.INTERNAL_ERROR));
+      });
+      it('THEN: It invokes the console.error() method with a concatenated error message.', async () => {
+        const expectedErrorMsg = `createEntry() - the error: ${expectedError}`;
+        await createEntry(validBlogData);
+
+        expect(console.error).toBeCalledTimes(1);
+        expect(console.error).toBeCalledWith(expectedErrorMsg);
       });
     });
   });

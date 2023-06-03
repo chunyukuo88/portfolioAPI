@@ -14,9 +14,14 @@ export async function createEntry(blogData) {
   if (invalidData(blogData)) {
     return buildErrorResponse(httpStatus.MISSING_ARGUMENT);
   }
-  const { blogPostRepository, client } = await getRepository();
-  const newEntity = await blogPostRepository.createAndSave(blogData);
-  console.log('createEntry() - newEntity:', newEntity);
-  await client.close();
-  return newEntity;
+  try {
+    const { blogPostRepository, client } = await getRepository();
+    const newEntity = await blogPostRepository.createAndSave(blogData);
+    console.log('createEntry() - newEntity:', newEntity);
+    await client.close();
+    return newEntity;
+  } catch (e) {
+    console.error(`createEntry() - the error: ${e}`);
+    return buildErrorResponse(httpStatus.INTERNAL_ERROR);
+  }
 }
