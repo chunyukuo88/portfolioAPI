@@ -2,6 +2,7 @@ import { getRepository } from '../common/repository';
 import { buildErrorResponse, httpStatus } from '../common/http';
 
 export async function updateEntry(entityId, blogData) {
+  const { log, error } = console;
   const { blogPostRepository, client } = await getRepository();
   const targetPost = blogPostRepository.fetch(entityId);
   const updatedPost = JSON.parse(JSON.stringify(targetPost));
@@ -11,5 +12,6 @@ export async function updateEntry(entityId, blogData) {
   });
   await blogPostRepository.save(updatedPost);
   await client.close();
+  log(updatedPost);
   return updatedPost;
 }
