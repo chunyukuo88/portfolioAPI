@@ -9,6 +9,8 @@ jest.spyOn(console, 'log').mockImplementation(jest.fn());
 afterEach(() => {
   jest.clearAllMocks();
 });
+const entityId = '01H1N9QG1YWA8KM95JD8HJVMW0';
+
 
 describe('GIVEN: an entityId valid data to update an existing blog post', () => {
   describe('WHEN: this function is invoked with a new title and body,', () => {
@@ -21,7 +23,6 @@ describe('GIVEN: an entityId valid data to update an existing blog post', () => 
       likes: 0,
       views: 0,
     };
-    const entityId = '01H1N9QG1YWA8KM95JD8HJVMW0';
     const newBlogData = {
       title: 'some NEW title',
       creationTimeStamp: '2222222222',
@@ -57,49 +58,33 @@ describe('GIVEN: an entityId valid data to update an existing blog post', () => 
     test('THEN: it logs the function execution and concatenates the successfully updated object.', async () => {
       const result = await updateEntry(entityId, newBlogData);
 
+      expect(console.log).toBeCalledTimes(2);
+      expect(console.log).toBeCalledWith(`updateEntry() - entityId: ${entityId} - blogData: ${newBlogData}.`);
       expect(console.log).toBeCalledWith(result);
     });
   });
   describe('WHEN: there is a problem with the database,', () => {
-    test('THEN: it returns an internal error.', () => {
-      const oldBlogData = {
-        title: 'OLD title',
-        creationTimeStamp: '1111111111',
-        theme: 'OLD content',
-        imageUrl: 'test',
-        someOtherFieldThatWillNotBeUpdated: 'this will not change',
-        likes: 0,
-        views: 0,
-      };
-      const entityId = '01H1N9QG1YWA8KM95JD8HJVMW0';
-      const newBlogData = {
-        title: 'some NEW title',
-        creationTimeStamp: '2222222222',
-        theme: 'NEW content',
-      };
-      const expectedResult = {
-        title: 'some NEW title',
-        creationTimeStamp: '2222222222',
-        theme: 'NEW content',
-        imageUrl: 'test',
-        someOtherFieldThatWillNotBeUpdated: 'this will not change',
-        likes: 0,
-        views: 0,
-      };
+    const newBlogData = {
+      title: 'some NEW title',
+      creationTimeStamp: '2222222222',
+      theme: 'NEW content',
+    };
+    const expectedError = new Error(
+      "There was a problem updating the blog post."
+    );
+    beforeEach(() => {
+      getRepository.mockRejectedValue(expectedError);
+    });
+    test('THEN: it returns an internal error.', async () => {
+      const result = await updateEntry(entityId, newBlogData);
 
-      beforeEach(() => {
-        getRepository.mockReturnValueOnce({
-          blogPostRepository: {
-            fetch: () => {
-              return oldBlogData;
-            },
-            save: jest.fn(),
-          },
-          client: {
-            close: jest.fn(),
-          },
-        });
-      });
+      expect(result).toEqual(buildErrorResponse(httpStatus.INTERNAL_ERROR));
+    });
+    test('THEN: it returns an internal error.', async () => {
+      await updateEntry(entityId, newBlogData);
+
+      expect(console.error).toBeCalledTimes(1);
+      expect(console.error).toBeCalledWith(expectedError);
     });
   });
 });
