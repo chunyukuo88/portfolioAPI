@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "directories": {
-    "test": "test"
+    "test": "__tests__"
   },
   "scripts": {
     "test": "jest --coverage --colors --silent",
