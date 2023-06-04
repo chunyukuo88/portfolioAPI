@@ -1,7 +1,6 @@
 import { getRepository } from "../../common/repository";
 import {
   buildErrorResponse,
-  buildSuccessResponse,
   httpStatus,
 } from "../../common/http";
 import { updateEntry } from "../../updateBlogPost/updateEntry";
@@ -63,9 +62,9 @@ describe("GIVEN: an entityId valid data to update an existing blog post", () => 
 
       expect(console.log).toBeCalledTimes(2);
       expect(console.log).toBeCalledWith(
-        `updateEntry() - entityId: ${entityId} - blogData: ${newBlogData}.`
+        `updateEntry() 1 - entityId: ${entityId} - blogData: ${newBlogData}.`
       );
-      expect(console.log).toBeCalledWith(result);
+      expect(console.log).toBeCalledWith('updateEntry() 2 - updatedPost: ', result);
     });
   });
   describe("WHEN: there is a problem with the database,", () => {
@@ -89,7 +88,7 @@ describe("GIVEN: an entityId valid data to update an existing blog post", () => 
       await updateEntry(entityId, newBlogData);
 
       expect(console.error).toBeCalledTimes(1);
-      expect(console.error).toBeCalledWith(expectedError);
+      expect(console.error).toBeCalledWith('Forsooth! The Controller error: ', expectedError);
     });
   });
 });
