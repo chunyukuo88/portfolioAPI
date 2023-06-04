@@ -1,8 +1,5 @@
 import { getRepository } from "../../common/repository";
-import {
-  buildErrorResponse,
-  httpStatus,
-} from "../../common/http";
+import { buildErrorResponse, httpStatus } from "../../common/http";
 import { updateEntry } from "../../updateBlogPost/updateEntry";
 
 jest.mock("../../common/repository");
@@ -26,15 +23,16 @@ describe("GIVEN: an entityId valid data to update an existing blog post", () => 
       views: 0,
     };
     const newBlogData = {
-      title: "some NEW title",
       creationTimeStamp: "2222222222",
+      title: "some NEW title",
+      imageUrl: "a new URL",
       theme: "NEW content",
     };
     const expectedResult = {
       title: "some NEW title",
       creationTimeStamp: "2222222222",
       theme: "NEW content",
-      imageUrl: "test",
+      imageUrl: "a new URL",
       someOtherFieldThatWillNotBeUpdated: "this will not change",
       likes: 0,
       views: 0,
@@ -60,11 +58,10 @@ describe("GIVEN: an entityId valid data to update an existing blog post", () => 
     test("THEN: it logs the function execution and concatenates the successfully updated object.", async () => {
       const result = await updateEntry(entityId, newBlogData);
 
-      expect(console.log).toBeCalledTimes(2);
+      expect(console.log).toBeCalledTimes(1);
       expect(console.log).toBeCalledWith(
-        `updateEntry() 1 - entityId: ${entityId} - blogData: ${newBlogData}.`
+        `updateEntry() 1 - entityId: ${entityId}`
       );
-      expect(console.log).toBeCalledWith('updateEntry() 2 - updatedPost: ', result);
     });
   });
   describe("WHEN: there is a problem with the database,", () => {
@@ -88,7 +85,10 @@ describe("GIVEN: an entityId valid data to update an existing blog post", () => 
       await updateEntry(entityId, newBlogData);
 
       expect(console.error).toBeCalledTimes(1);
-      expect(console.error).toBeCalledWith('Forsooth! The Controller error: ', expectedError);
+      expect(console.error).toBeCalledWith(
+        "Forsooth! The Controller error: ",
+        expectedError
+      );
     });
   });
 });
