@@ -35,6 +35,14 @@ functions:
           method: DELETE
           authorizer:
             name: cognitoAuthorizer
+  updateEntry:
+    handler: dist/updateBlogPost/httpHandler.updateBlogPost
+    events:
+      - httpApi:
+          path: /blog/update/{entityId}
+          method: PUT
+          authorizer:
+            name: cognitoAuthorizer
   writeBlogPost:
     handler: dist/writeBlogPost/httpHandler.writeBlogPost
     events:

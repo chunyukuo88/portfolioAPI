@@ -1,23 +1,23 @@
-import { updateEntry } from '../../updateBlogPost/updateEntry';
-import { errorMessages, httpStatus, standardHeaders} from '../../common/http';
-import { updateBlogPost } from '../../updateBlogPost/httpHandler';
+import { updateEntry } from "../../updateBlogPost/updateEntry";
+import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
+import { updateBlogPost } from "../../updateBlogPost/httpHandler";
 
-jest.mock('../../updateBlogPost/updateEntry');
-jest.spyOn(console, 'log').mockImplementation(jest.fn());
-jest.spyOn(console, 'error').mockImplementation(jest.fn());
+jest.mock("../../updateBlogPost/updateEntry");
+const loggerSpy = jest.spyOn(console, "log").mockImplementation(jest.fn());
+const errorSpy = jest.spyOn(console, "error").mockImplementation(jest.fn());
 
-describe('GIVEN: updateBlogPost/httpHandler.updateBlogPost()', () => {
-  describe('GIVEN: A valid HTTP request containing updates to a blog post', () => {
-    describe('WHEN: this function is called', () => {
+describe("GIVEN: updateBlogPost/httpHandler.updateBlogPost()", () => {
+  describe("GIVEN: A valid HTTP request containing updates to a blog post", () => {
+    describe("WHEN: this function is called", () => {
       const resultingEntryAfterUpdateCompletes = {
-        title: 'some updated title',
-        theme: 'unchanged theme',
-        imageUrl: 'unchanged image URL',
+        title: "some updated title",
+        theme: "unchanged theme",
+        imageUrl: "unchanged image URL",
         likes: 0,
         views: 0,
       };
       const validBlogUpdates = {
-        title: 'some updated title',
+        title: "some updated title",
       };
       const httpRequest = {
         pathParameters: {},
@@ -31,29 +31,29 @@ describe('GIVEN: updateBlogPost/httpHandler.updateBlogPost()', () => {
       beforeEach(() => {
         updateEntry.mockReturnValueOnce(resultingEntryAfterUpdateCompletes);
       });
-      it('THEN: returns a success response containing the resultant updated blog entry.', async () => {
+      it("THEN: returns a success response containing the resultant updated blog entry.", async () => {
         const result = await updateBlogPost(httpRequest);
 
         expect(result).toEqual(expectedResult);
       });
-      it('THEN: logs that success response received from the controller.', async () => {
+      it("THEN: logs that success response received from the controller.", async () => {
         await updateBlogPost(httpRequest);
 
-        expect(console.log).toBeCalledWith(resultingEntryAfterUpdateCompletes);
+        expect(loggerSpy).toBeCalledWith(resultingEntryAfterUpdateCompletes);
       });
     });
   });
-  describe('GIVEN: there is a problem with the database', () => {
-    describe('WHEN: this function is called with otherwise valid data', () => {
-      const controllerError = new Error('error from Controller');
+  describe("GIVEN: there is a problem with the database", () => {
+    describe("WHEN: this function is called with otherwise valid data", () => {
+      const controllerError = new Error("error from Controller");
       beforeEach(() => {
         updateEntry.mockImplementationOnce(() => {
           throw controllerError;
         });
       });
       const validBlogUpdates = {
-        title: 'some updated title',
-        theme: 'an updated theme',
+        title: "some updated title",
+        theme: "an updated theme",
       };
       const httpRequest = {
         pathParameters: {},
@@ -68,13 +68,13 @@ describe('GIVEN: updateBlogPost/httpHandler.updateBlogPost()', () => {
         }),
         headers: standardHeaders,
       };
-      it('THEN: logs the error.', async () => {
+      it("THEN: logs the error.", async () => {
         await updateBlogPost(httpRequest);
 
-        expect(console.error).toBeCalledTimes(1);
-        expect(console.error).toBeCalledWith(controllerError);
+        expect(errorSpy).toBeCalledTimes(1);
+        expect(errorSpy).toBeCalledWith(controllerError);
       });
-      it('THEN: returns an error response.', async () => {
+      it("THEN: returns an error response.", async () => {
         const result = await updateBlogPost(httpRequest);
 
         expect(result).toEqual(expectedResult);

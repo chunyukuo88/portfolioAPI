@@ -14,10 +14,10 @@ export async function updateEntry(entityId, blogData) {
     });
     await blogPostRepository.save(updatedPost);
     await client.close();
-    log(updatedPost);
+    log('updateEntry() - updatedPost: ', updatedPost);
     return updatedPost;
   } catch (e) {
-    error(e);
+    error('controller error: ', e);
     return buildErrorResponse(httpStatus.INTERNAL_ERROR);
   }
 }

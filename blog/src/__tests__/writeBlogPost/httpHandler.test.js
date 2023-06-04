@@ -1,28 +1,28 @@
-import { createEntry } from '../../writeBlogPost/createEntry';
-import { writeBlogPost } from '../../writeBlogPost/httpHandler';
-import { errorMessages, httpStatus, standardHeaders } from '../../common/http';
+import { createEntry } from "../../writeBlogPost/createEntry";
+import { writeBlogPost } from "../../writeBlogPost/httpHandler";
+import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
 
-jest.mock('../../writeBlogPost/createEntry');
+jest.mock("../../writeBlogPost/createEntry");
 
 let spy;
 beforeEach(() => {
-  spy = jest.spyOn(console, 'log').mockImplementationOnce(jest.fn());
+  spy = jest.spyOn(console, "log").mockImplementationOnce(jest.fn());
 });
 afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe('writeBlogPost/httpHandler.writeBlogPost()', () => {
-  describe('GIVEN: A valid HTTP request containing a blog post', () => {
-    describe('WHEN: this function is called', () => {
+describe("writeBlogPost/httpHandler.writeBlogPost()", () => {
+  describe("GIVEN: A valid HTTP request containing a blog post", () => {
+    describe("WHEN: this function is called", () => {
       const redisEntryId = 1;
       beforeEach(() => {
         createEntry.mockReturnValueOnce(redisEntryId);
       });
       const validBlogData = {
-        title: 'Test title',
-        theme: 'Test theme',
-        imageUrl: 'Test image URL',
+        title: "Test title",
+        theme: "Test theme",
+        imageUrl: "Test image URL",
         likes: 0,
         views: 0,
       };
@@ -35,36 +35,36 @@ describe('writeBlogPost/httpHandler.writeBlogPost()', () => {
         body: JSON.stringify(1),
         headers: standardHeaders,
       };
-      it('THEN: the function\'s execution is logged.', async () => {
+      it("THEN: the function's execution is logged.", async () => {
         const spy = jest
-          .spyOn(console, 'log')
+          .spyOn(console, "log")
           .mockImplementationOnce(jest.fn());
 
         await writeBlogPost(httpRequest);
 
         expect(spy).toBeCalledTimes(1);
       });
-      it('THEN: publishes the post to the database.', async () => {
+      it("THEN: publishes the post to the database.", async () => {
         const result = await writeBlogPost(httpRequest);
 
         expect(result).toEqual(expectedResult);
       });
     });
   });
-  describe('GIVEN: There is a problem with the Redis server,', () => {
-    describe('WHEN: this function is invoked with a valid HTTP request,', () => {
+  describe("GIVEN: There is a problem with the Redis server,", () => {
+    describe("WHEN: this function is invoked with a valid HTTP request,", () => {
       let errorLogger;
-      const expectedError = new Error('Redis broke');
+      const expectedError = new Error("Redis broke");
       beforeEach(() => {
         createEntry.mockRejectedValueOnce(expectedError);
         errorLogger = jest
-          .spyOn(console, 'error')
+          .spyOn(console, "error")
           .mockImplementationOnce(jest.fn());
       });
       const validBlogData = {
-        title: 'Test title',
-        theme: 'Test theme',
-        imageUrl: 'Test image URL',
+        title: "Test title",
+        theme: "Test theme",
+        imageUrl: "Test image URL",
         likes: 0,
         views: 0,
       };
@@ -81,12 +81,12 @@ describe('writeBlogPost/httpHandler.writeBlogPost()', () => {
         }),
         headers: standardHeaders,
       };
-      it('THEN: returns an error response', async () => {
+      it("THEN: returns an error response", async () => {
         const result = await writeBlogPost(httpRequest);
 
         expect(result).toEqual(expectedResult);
       });
-      it('THEN: logs the error', async () => {
+      it("THEN: logs the error", async () => {
         await writeBlogPost(httpRequest);
 
         expect(errorLogger).toBeCalledTimes(1);
