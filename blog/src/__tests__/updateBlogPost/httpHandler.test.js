@@ -1,9 +1,10 @@
-import { updateEntry } from "../../updateBlogPost/updateEntry";
-import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
-import { updateBlogPost } from "../../updateBlogPost/httpHandler";
+import { updateEntry } from '../../updateBlogPost/updateEntry';
+import { errorMessages, httpStatus, standardHeaders} from '../../common/http';
+import { updateBlogPost } from '../../updateBlogPost/httpHandler';
 
-jest.mock("../../updateBlogPost/updateEntry");
+jest.mock('../../updateBlogPost/updateEntry');
 jest.spyOn(console, 'log').mockImplementation(jest.fn());
+jest.spyOn(console, 'error').mockImplementation(jest.fn());
 
 describe('GIVEN: updateBlogPost/httpHandler.updateBlogPost()', () => {
   describe('GIVEN: A valid HTTP request containing updates to a blog post', () => {
@@ -15,12 +16,12 @@ describe('GIVEN: updateBlogPost/httpHandler.updateBlogPost()', () => {
         likes: 0,
         views: 0,
       };
-      const updatesToExistingBlog = {
+      const validBlogUpdates = {
         title: 'some updated title',
       };
       const httpRequest = {
         pathParameters: {},
-        body: JSON.stringify(updatesToExistingBlog),
+        body: JSON.stringify(validBlogUpdates),
       };
       const expectedResult = {
         statusCode: httpStatus.SUCCESSFUL,
@@ -39,6 +40,44 @@ describe('GIVEN: updateBlogPost/httpHandler.updateBlogPost()', () => {
         await updateBlogPost(httpRequest);
 
         expect(console.log).toBeCalledWith(resultingEntryAfterUpdateCompletes);
+      });
+    });
+  });
+  describe('GIVEN: there is a problem with the database', () => {
+    describe('WHEN: this function is called with otherwise valid data', () => {
+      const controllerError = new Error('error from Controller');
+      beforeEach(() => {
+        updateEntry.mockImplementationOnce(() => {
+          throw controllerError;
+        });
+      });
+      const validBlogUpdates = {
+        title: 'some updated title',
+        theme: 'an updated theme',
+      };
+      const httpRequest = {
+        pathParameters: {},
+        body: JSON.stringify(validBlogUpdates),
+      };
+      const expectedResult = {
+        statusCode: httpStatus.INTERNAL_ERROR,
+        body: JSON.stringify({
+          error: {
+            errorMessage: errorMessages.INVALID_REQUEST,
+          },
+        }),
+        headers: standardHeaders,
+      };
+      it('THEN: logs the error.', async () => {
+        await updateBlogPost(httpRequest);
+
+        expect(console.error).toBeCalledTimes(1);
+        expect(console.error).toBeCalledWith(controllerError);
+      });
+      it('THEN: returns an error response.', async () => {
+        const result = await updateBlogPost(httpRequest);
+
+        expect(result).toEqual(expectedResult);
       });
     });
   });
