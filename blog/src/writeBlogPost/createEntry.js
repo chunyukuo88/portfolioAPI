@@ -7,18 +7,19 @@ const invalidData = (blogData) => !blogData
   || !blogData.theme;
 
 export async function createEntry(blogData) {
-  console.log('createEntry()');
+  const { log, error } = console;
+  log('createEntry()');
   if (invalidData(blogData)) {
     return buildErrorResponse(httpStatus.MISSING_ARGUMENT);
   }
   try {
     const { blogPostRepository, client } = await getRepository();
     const newEntity = await blogPostRepository.createAndSave(blogData);
-    console.log('createEntry() - newEntity:', newEntity);
+    log('createEntry() - newEntity:', newEntity);
     await client.close();
     return newEntity;
   } catch (e) {
-    console.error(`createEntry() - the error: ${e}`);
+    error(`createEntry() - the error: ${e}`);
     return buildErrorResponse(httpStatus.INTERNAL_ERROR);
   }
 }
