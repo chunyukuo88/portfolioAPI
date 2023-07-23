@@ -173,7 +173,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/portfolioAPI/prod/1690129666835-2023-07-23T16:27:46.835Z/portfolioAPI.zip"
+          "S3Key": "serverless/portfolioAPI/prod/1690130232131-2023-07-23T16:37:12.131Z/portfolioAPI.zip"
         },
         "Handler": "dist/crossword/getCrosswordInfo/httpHandler.getCrosswordInfo",
         "Runtime": "nodejs18.x",
@@ -204,7 +204,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/portfolioAPI/prod/1690129666835-2023-07-23T16:27:46.835Z/portfolioAPI.zip"
+          "S3Key": "serverless/portfolioAPI/prod/1690130232131-2023-07-23T16:37:12.131Z/portfolioAPI.zip"
         },
         "Handler": "dist/crossword/getSingleCrossword/httpHandler.getSingleCrossword",
         "Runtime": "nodejs18.x",
@@ -235,7 +235,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/portfolioAPI/prod/1690129666835-2023-07-23T16:27:46.835Z/portfolioAPI.zip"
+          "S3Key": "serverless/portfolioAPI/prod/1690130232131-2023-07-23T16:37:12.131Z/portfolioAPI.zip"
         },
         "Handler": "dist/crossword/writeCrosswordInfo/httpHandler.writeCrosswordInfo",
         "Runtime": "nodejs18.x",
@@ -259,34 +259,34 @@
         "WriteCrosswordInfoLogGroup"
       ]
     },
-    "GetCrosswordInfoLambdaVersiongDNnKRj1z3Xj6alzwfH5hwAyBpbzIhMgRpBpcfcLT0": {
+    "GetCrosswordInfoLambdaVersionveK9hwSZQBha22uHw4zxuLMeqI31ouZEvwnGdqeYlRA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetCrosswordInfoLambdaFunction"
         },
-        "CodeSha256": "ZW7I1880ul+lNCbVBcuQqaz9TDxk1azulk1aOkCW9nM="
+        "CodeSha256": "gnWyy0Xuvw1dI/B786ng1M+DUzRp0U3+HsbrdF2EKIw="
       }
     },
-    "GetSingleCrosswordLambdaVersionPUOz032yWblMPu4cSeyy1VAbVNO2pJ3xWXfkpddW0": {
+    "GetSingleCrosswordLambdaVersionsAttjEonE8NPnc0TNkD1MZN2xSdwGWPOc9xZxUxkFhI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetSingleCrosswordLambdaFunction"
         },
-        "CodeSha256": "ZW7I1880ul+lNCbVBcuQqaz9TDxk1azulk1aOkCW9nM="
+        "CodeSha256": "gnWyy0Xuvw1dI/B786ng1M+DUzRp0U3+HsbrdF2EKIw="
       }
     },
-    "WriteCrosswordInfoLambdaVersionpeoZkWCsIBHLDp3heiJzr8jOzpE1zC7hx7pFTfWXwtI": {
+    "WriteCrosswordInfoLambdaVersionewLQ4MLtzZy0PRfEbqvmoe5c30McqfTVyeGwSYTNAA": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "WriteCrosswordInfoLambdaFunction"
         },
-        "CodeSha256": "ZW7I1880ul+lNCbVBcuQqaz9TDxk1azulk1aOkCW9nM="
+        "CodeSha256": "gnWyy0Xuvw1dI/B786ng1M+DUzRp0U3+HsbrdF2EKIw="
       }
     },
     "HttpApi": {
@@ -589,7 +589,7 @@
     "GetCrosswordInfoLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetCrosswordInfoLambdaVersiongDNnKRj1z3Xj6alzwfH5hwAyBpbzIhMgRpBpcfcLT0"
+        "Ref": "GetCrosswordInfoLambdaVersionveK9hwSZQBha22uHw4zxuLMeqI31ouZEvwnGdqeYlRA"
       },
       "Export": {
         "Name": "sls-portfolioAPI-prod-GetCrosswordInfoLambdaFunctionQualifiedArn"
@@ -598,7 +598,7 @@
     "GetSingleCrosswordLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetSingleCrosswordLambdaVersionPUOz032yWblMPu4cSeyy1VAbVNO2pJ3xWXfkpddW0"
+        "Ref": "GetSingleCrosswordLambdaVersionsAttjEonE8NPnc0TNkD1MZN2xSdwGWPOc9xZxUxkFhI"
       },
       "Export": {
         "Name": "sls-portfolioAPI-prod-GetSingleCrosswordLambdaFunctionQualifiedArn"
@@ -607,7 +607,7 @@
     "WriteCrosswordInfoLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "WriteCrosswordInfoLambdaVersionpeoZkWCsIBHLDp3heiJzr8jOzpE1zC7hx7pFTfWXwtI"
+        "Ref": "WriteCrosswordInfoLambdaVersionewLQ4MLtzZy0PRfEbqvmoe5c30McqfTVyeGwSYTNAA"
       },
       "Export": {
         "Name": "sls-portfolioAPI-prod-WriteCrosswordInfoLambdaFunctionQualifiedArn"
