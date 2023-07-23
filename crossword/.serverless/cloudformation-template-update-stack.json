@@ -74,19 +74,19 @@
     "GetCrosswordInfoLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/portfolioAPI-dev-getCrosswordInfo"
+        "LogGroupName": "/aws/lambda/portfolioAPI-prod-getCrosswordInfo"
       }
     },
     "GetSingleCrosswordLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/portfolioAPI-dev-getSingleCrossword"
+        "LogGroupName": "/aws/lambda/portfolioAPI-prod-getSingleCrossword"
       }
     },
     "WriteCrosswordInfoLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/portfolioAPI-dev-writeCrosswordInfo"
+        "LogGroupName": "/aws/lambda/portfolioAPI-prod-writeCrosswordInfo"
       }
     },
     "IamRoleLambdaExecution": {
@@ -115,7 +115,7 @@
                 "-",
                 [
                   "portfolioAPI",
-                  "dev",
+                  "prod",
                   "lambda"
                 ]
               ]
@@ -131,7 +131,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/portfolioAPI-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/portfolioAPI-prod*:*"
                     }
                   ]
                 },
@@ -142,7 +142,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/portfolioAPI-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/portfolioAPI-prod*:*:*"
                     }
                   ]
                 }
@@ -156,7 +156,7 @@
             "-",
             [
               "portfolioAPI",
-              "dev",
+              "prod",
               {
                 "Ref": "AWS::Region"
               },
@@ -173,16 +173,16 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/portfolioAPI/dev/1678573025400-2023-03-11T22:17:05.400Z/portfolioAPI.zip"
+          "S3Key": "serverless/portfolioAPI/prod/1690129666835-2023-07-23T16:27:46.835Z/portfolioAPI.zip"
         },
         "Handler": "dist/crossword/getCrosswordInfo/httpHandler.getCrosswordInfo",
         "Runtime": "nodejs18.x",
-        "FunctionName": "portfolioAPI-dev-getCrosswordInfo",
+        "FunctionName": "portfolioAPI-prod-getCrosswordInfo",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "NODE_ENV": "dev",
+            "NODE_ENV": "prod",
             "Table_NAME": "Crossword-Solutions"
           }
         },
@@ -204,16 +204,16 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/portfolioAPI/dev/1678573025400-2023-03-11T22:17:05.400Z/portfolioAPI.zip"
+          "S3Key": "serverless/portfolioAPI/prod/1690129666835-2023-07-23T16:27:46.835Z/portfolioAPI.zip"
         },
         "Handler": "dist/crossword/getSingleCrossword/httpHandler.getSingleCrossword",
         "Runtime": "nodejs18.x",
-        "FunctionName": "portfolioAPI-dev-getSingleCrossword",
+        "FunctionName": "portfolioAPI-prod-getSingleCrossword",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "NODE_ENV": "dev",
+            "NODE_ENV": "prod",
             "Table_NAME": "Crossword-Solutions"
           }
         },
@@ -235,16 +235,16 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/portfolioAPI/dev/1678573025400-2023-03-11T22:17:05.400Z/portfolioAPI.zip"
+          "S3Key": "serverless/portfolioAPI/prod/1690129666835-2023-07-23T16:27:46.835Z/portfolioAPI.zip"
         },
         "Handler": "dist/crossword/writeCrosswordInfo/httpHandler.writeCrosswordInfo",
         "Runtime": "nodejs18.x",
-        "FunctionName": "portfolioAPI-dev-writeCrosswordInfo",
+        "FunctionName": "portfolioAPI-prod-writeCrosswordInfo",
         "MemorySize": 1024,
         "Timeout": 6,
         "Environment": {
           "Variables": {
-            "NODE_ENV": "dev",
+            "NODE_ENV": "prod",
             "Table_NAME": "Crossword-Solutions"
           }
         },
@@ -259,40 +259,40 @@
         "WriteCrosswordInfoLogGroup"
       ]
     },
-    "GetCrosswordInfoLambdaVersionllQ95Z72pWEnniXsewww3Aln8Ule2jiBab6ONkfQwQo": {
+    "GetCrosswordInfoLambdaVersiongDNnKRj1z3Xj6alzwfH5hwAyBpbzIhMgRpBpcfcLT0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetCrosswordInfoLambdaFunction"
         },
-        "CodeSha256": "VWsUpPskV0uZKlJCICsFs2V3OZo3vogYeUt0GA38aVo="
+        "CodeSha256": "ZW7I1880ul+lNCbVBcuQqaz9TDxk1azulk1aOkCW9nM="
       }
     },
-    "GetSingleCrosswordLambdaVersiondrcI04Fmg758ExEkTTTOpAw6equeLFfEgJW5BUAQPE": {
+    "GetSingleCrosswordLambdaVersionPUOz032yWblMPu4cSeyy1VAbVNO2pJ3xWXfkpddW0": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GetSingleCrosswordLambdaFunction"
         },
-        "CodeSha256": "VWsUpPskV0uZKlJCICsFs2V3OZo3vogYeUt0GA38aVo="
+        "CodeSha256": "ZW7I1880ul+lNCbVBcuQqaz9TDxk1azulk1aOkCW9nM="
       }
     },
-    "WriteCrosswordInfoLambdaVersionBV5BV7VDSs2C04TW1OQj775tjjWpVr3dBFOgcghRy6M": {
+    "WriteCrosswordInfoLambdaVersionpeoZkWCsIBHLDp3heiJzr8jOzpE1zC7hx7pFTfWXwtI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "WriteCrosswordInfoLambdaFunction"
         },
-        "CodeSha256": "VWsUpPskV0uZKlJCICsFs2V3OZo3vogYeUt0GA38aVo="
+        "CodeSha256": "ZW7I1880ul+lNCbVBcuQqaz9TDxk1azulk1aOkCW9nM="
       }
     },
     "HttpApi": {
       "Type": "AWS::ApiGatewayV2::Api",
       "Properties": {
-        "Name": "dev-portfolioAPI",
+        "Name": "prod-portfolioAPI",
         "ProtocolType": "HTTP",
         "CorsConfiguration": {
           "AllowHeaders": [
@@ -583,34 +583,34 @@
         "Ref": "ServerlessDeploymentBucket"
       },
       "Export": {
-        "Name": "sls-portfolioAPI-dev-ServerlessDeploymentBucketName"
+        "Name": "sls-portfolioAPI-prod-ServerlessDeploymentBucketName"
       }
     },
     "GetCrosswordInfoLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetCrosswordInfoLambdaVersionllQ95Z72pWEnniXsewww3Aln8Ule2jiBab6ONkfQwQo"
+        "Ref": "GetCrosswordInfoLambdaVersiongDNnKRj1z3Xj6alzwfH5hwAyBpbzIhMgRpBpcfcLT0"
       },
       "Export": {
-        "Name": "sls-portfolioAPI-dev-GetCrosswordInfoLambdaFunctionQualifiedArn"
+        "Name": "sls-portfolioAPI-prod-GetCrosswordInfoLambdaFunctionQualifiedArn"
       }
     },
     "GetSingleCrosswordLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetSingleCrosswordLambdaVersiondrcI04Fmg758ExEkTTTOpAw6equeLFfEgJW5BUAQPE"
+        "Ref": "GetSingleCrosswordLambdaVersionPUOz032yWblMPu4cSeyy1VAbVNO2pJ3xWXfkpddW0"
       },
       "Export": {
-        "Name": "sls-portfolioAPI-dev-GetSingleCrosswordLambdaFunctionQualifiedArn"
+        "Name": "sls-portfolioAPI-prod-GetSingleCrosswordLambdaFunctionQualifiedArn"
       }
     },
     "WriteCrosswordInfoLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "WriteCrosswordInfoLambdaVersionBV5BV7VDSs2C04TW1OQj775tjjWpVr3dBFOgcghRy6M"
+        "Ref": "WriteCrosswordInfoLambdaVersionpeoZkWCsIBHLDp3heiJzr8jOzpE1zC7hx7pFTfWXwtI"
       },
       "Export": {
-        "Name": "sls-portfolioAPI-dev-WriteCrosswordInfoLambdaFunctionQualifiedArn"
+        "Name": "sls-portfolioAPI-prod-WriteCrosswordInfoLambdaFunctionQualifiedArn"
       }
     },
     "HttpApiId": {
@@ -619,7 +619,7 @@
         "Ref": "HttpApi"
       },
       "Export": {
-        "Name": "sls-portfolioAPI-dev-HttpApiId"
+        "Name": "sls-portfolioAPI-prod-HttpApiId"
       }
     },
     "HttpApiUrl": {
@@ -644,7 +644,7 @@
         ]
       },
       "Export": {
-        "Name": "sls-portfolioAPI-dev-HttpApiUrl"
+        "Name": "sls-portfolioAPI-prod-HttpApiUrl"
       }
     }
   }
