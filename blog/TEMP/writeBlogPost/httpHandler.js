@@ -2,7 +2,7 @@ import {
   buildErrorResponse,
   buildSuccessResponse,
   httpStatus,
-} from '../common/http';
+} from '../../src/common/http';
 import { createEntry } from './createEntry';
 
 export async function writeBlogPost(httpRequest) {

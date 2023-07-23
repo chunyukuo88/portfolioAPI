@@ -1,6 +1,6 @@
-import { updateEntry } from "../../updateBlogPost/updateEntry";
+import { updateEntry } from "../../../TEMP/updateBlogPost/updateEntry";
 import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
-import { updateBlogPost } from "../../updateBlogPost/httpHandler";
+import { updateBlogPost } from "../../../TEMP/updateBlogPost/httpHandler";
 
 jest.mock("../../updateBlogPost/updateEntry");
 const loggerSpy = jest.spyOn(console, "log").mockImplementation(jest.fn());

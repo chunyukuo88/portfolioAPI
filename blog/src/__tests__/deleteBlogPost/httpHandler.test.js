@@ -1,6 +1,6 @@
 import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
-import { handler } from "../../deleteBlogPost/httpHandler";
-import { deletePost } from "../../deleteBlogPost/deletePost";
+import { handler } from "../../../TEMP/deleteBlogPost/httpHandler";
+import { deletePost } from "../../../TEMP/deleteBlogPost/deletePost";
 
 jest.mock("../../deleteBlogPost/deletePost");
 

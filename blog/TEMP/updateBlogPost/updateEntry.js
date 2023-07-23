@@ -1,5 +1,5 @@
 import { getRepository } from '../common/repository';
-import { buildErrorResponse, httpStatus } from '../common/http';
+import { buildErrorResponse, httpStatus } from '../../src/common/http';
 
 export async function updateEntry(entityId, blogData) {
   const { log, error } = console;

@@ -2,7 +2,7 @@ import {
   buildErrorResponse,
   buildSuccessResponse,
   httpStatus,
-} from '../common/http';
+} from '../../src/common/http';
 import { getRepository } from '../common/repository';
 
 export async function deletePost(blogPostId) {

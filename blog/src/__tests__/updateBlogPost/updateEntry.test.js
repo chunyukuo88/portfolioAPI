@@ -1,6 +1,6 @@
 import { getRepository } from "../../common/repository";
 import { buildErrorResponse, httpStatus } from "../../common/http";
-import { updateEntry } from "../../updateBlogPost/updateEntry";
+import { updateEntry } from "../../../TEMP/updateBlogPost/updateEntry";
 
 jest.mock("../../common/repository");
 jest.spyOn(console, "error").mockImplementation(jest.fn());

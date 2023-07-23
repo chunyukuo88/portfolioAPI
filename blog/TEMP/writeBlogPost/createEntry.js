@@ -1,5 +1,5 @@
 import { getRepository } from '../common/repository';
-import { buildErrorResponse, httpStatus } from '../common/http';
+import { buildErrorResponse, httpStatus } from '../../src/common/http';
 
 const invalidData = (blogData) => !blogData
   || !blogData.title

@@ -1,4 +1,4 @@
-import { createEntry } from "../../writeBlogPost/createEntry";
+import { createEntry } from "../../../TEMP/writeBlogPost/createEntry";
 import { getRepository } from "../../common/repository";
 import { buildErrorResponse, httpStatus } from "../../common/http";
 

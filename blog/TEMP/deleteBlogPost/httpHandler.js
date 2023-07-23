@@ -2,7 +2,7 @@ import {
   buildErrorResponse,
   buildSuccessResponse,
   httpStatus,
-} from '../common/http';
+} from '../../src/common/http';
 import { deletePost } from './deletePost';
 
 export async function handler(httpRequest) {

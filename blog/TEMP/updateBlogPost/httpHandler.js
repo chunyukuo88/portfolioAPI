@@ -3,7 +3,7 @@ import {
   buildErrorResponse,
   buildSuccessResponse,
   httpStatus,
-} from '../common/http';
+} from '../../src/common/http';
 
 export async function updateBlogPost(httpRequest) {
   const { log, error } = console;
