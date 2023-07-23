@@ -6,7 +6,6 @@ import {
 } from '../common/http';
 
 export async function getAllEntries() {
-  console.log('getAllEntries()');
   const supabase = getSupabaseClient();
   try {
     const { data } = await supabase

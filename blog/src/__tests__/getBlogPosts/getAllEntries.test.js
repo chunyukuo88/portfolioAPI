@@ -1,5 +1,5 @@
 import { getAllEntries } from "../../getBlogPosts/getAllEntries";
-import { getSupabaseClient } from "../../common/factory";
+import "../../common/factory";
 
 const mockBlogEntries = [
   {
@@ -22,7 +22,7 @@ const mockBlogEntries = [
   },
 ];
 
-jest.mock('../../common/factory', () => ({
+jest.mock("../../common/factory", () => ({
   getSupabaseClient: jest.fn(() => ({
     from: jest.fn(() => ({
       select: jest.fn(() => ({
@@ -35,7 +35,7 @@ jest.mock('../../common/factory', () => ({
 }));
 
 describe("getAllEntries/0", () => {
-  describe("GIVEN: There are no problems with the Redis server,", () => {
+  describe("GIVEN: There are no problems with the Supabase server,", () => {
     describe("WHEN: this function is invoked,", () => {
       it("THEN: returns an array of blog entry objects.", async () => {
         const result = await getAllEntries();
