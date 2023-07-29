@@ -7,7 +7,7 @@ export class BlogPage {
     this.count = count; // integer
     this.next = next; // string
     this.previous = previous; // string
-    this.results = results; // string
+    this.results = results; // string representing a string of Article objects
   }
 }
 
