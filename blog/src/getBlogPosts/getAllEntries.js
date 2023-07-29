@@ -1,9 +1,21 @@
-import { getRepository } from '../common/repository';
+import { getSupabaseClient } from '../common/factory';
+import {
+  buildErrorResponse,
+  buildSuccessResponse,
+  httpStatus,
+} from '../common/http';
 
 export async function getAllEntries() {
-  const { blogPostRepository, client } = await getRepository();
-  await blogPostRepository.createIndex();
-  const allBlogEntries = await blogPostRepository.search().return.all();
-  await client.close();
-  return allBlogEntries;
+  const supabase = getSupabaseClient();
+  try {
+    const { data } = await supabase
+      .from(process.env.SUPABASE_BREAD_BLOG_TABLE)
+      .select('*')
+      .order('created_at', { ascending: false });
+    const response = buildSuccessResponse(data);
+    return response;
+  } catch (e) {
+    console.error('server broke: ', e);
+    return buildErrorResponse(httpStatus.INTERNAL_ERROR);
+  }
 }

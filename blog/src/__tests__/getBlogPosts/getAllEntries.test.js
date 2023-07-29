@@ -1,52 +1,46 @@
 import { getAllEntries } from "../../getBlogPosts/getAllEntries";
-import { getRepository } from "../../common/repository";
+import "../../common/factory";
 
-jest.mock("../../common/repository", () => ({
-  getRepository: jest.fn(),
+const mockBlogEntries = [
+  {
+    id: "123",
+    created_at: "1",
+    title: "Roast potatoes",
+    body: "On rice, dipped in cheese",
+    likes: 0,
+    views: 0,
+    page: 1,
+  },
+  {
+    id: "1234",
+    created_at: "1",
+    title: "Some Other Bread",
+    body: "Great!",
+    likes: 0,
+    views: 0,
+    page: 1,
+  },
+];
+
+jest.mock("../../common/factory", () => ({
+  getSupabaseClient: jest.fn(() => ({
+    from: jest.fn(() => ({
+      select: jest.fn(() => ({
+        order: jest.fn(() => ({
+          data: mockBlogEntries,
+        })),
+      })),
+    })),
+  })),
 }));
 
 describe("getAllEntries/0", () => {
-  describe("GIVEN: There are no problems with the Redis server,", () => {
+  describe("GIVEN: There are no problems with the Supabase server,", () => {
     describe("WHEN: this function is invoked,", () => {
       it("THEN: returns an array of blog entry objects.", async () => {
-        const mockBlogEntries = [
-          {
-            entityId: "01GTM5P7XKK1DFEGACMBZNDH4K",
-            imageUrl: "",
-            likes: 0,
-            theme: "On rice, dipped in cheese",
-            title: "Roast potatoes",
-            views: 0,
-            page: 1,
-          },
-          {
-            entityId: "01GTM5P7XKK1DFEGACMBZNDH4J",
-            imageUrl: "",
-            likes: 0,
-            theme: "A fine day to write a blog, wot wot",
-            title: "Bloggimus",
-            views: 0,
-            page: 1,
-          },
-        ];
-        getRepository.mockResolvedValue({
-          blogPostRepository: {
-            createIndex: jest.fn(),
-            search: () => ({
-              return: {
-                all: () => mockBlogEntries,
-              },
-              search: jest.fn().mockReturnThis(),
-            }),
-          },
-          client: {
-            close: jest.fn(),
-          },
-        });
-
         const result = await getAllEntries();
 
-        expect(result).toEqual(mockBlogEntries);
+        expect(result.body).toEqual(JSON.stringify(mockBlogEntries));
       });
     });
   });

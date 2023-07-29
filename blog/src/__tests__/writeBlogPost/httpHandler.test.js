@@ -1,5 +1,5 @@
-import { createEntry } from "../../writeBlogPost/createEntry";
-import { writeBlogPost } from "../../writeBlogPost/httpHandler";
+import { createEntry } from "../../../TEMP/writeBlogPost/createEntry";
+import { writeBlogPost } from "../../../TEMP/writeBlogPost/httpHandler";
 import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
 
 jest.mock("../../writeBlogPost/createEntry");

@@ -1,4 +1,4 @@
-import { getByPage } from "../../getBlogsByPage/getByPage";
+import { getByPage } from "../../../TEMP/getBlogsByPage/getByPage";
 import { getRepository } from "../../common/repository";
 
 jest.mock("../../common/repository", () => ({

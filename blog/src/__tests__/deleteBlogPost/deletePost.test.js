@@ -1,4 +1,4 @@
-import { deletePost } from "../../deleteBlogPost/deletePost";
+import { deletePost } from "../../../TEMP/deleteBlogPost/deletePost";
 import { getRepository } from "../../common/repository";
 import {
   buildErrorResponse,
