@@ -2,7 +2,7 @@ import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
 import { handler } from "../../getBlogPosts/httpHandler";
 import { getAllEntries } from "../../getBlogPosts/getAllEntries";
 
-jest.mock("../../getBlogPosts/getAllEntries");
+jest.mock("../../getBlogPosts/getAllEntriesInfinite");
 
 afterEach(() => {
   jest.clearAllMocks();

@@ -34,7 +34,7 @@ jest.mock("../../common/factory", () => ({
   })),
 }));
 
-describe("getAllEntries/0", () => {
+describe("getAllEntriesInfinite/0", () => {
   describe("GIVEN: There are no problems with the Supabase server,", () => {
     describe("WHEN: this function is invoked,", () => {
       it("THEN: returns an array of blog entry objects.", async () => {

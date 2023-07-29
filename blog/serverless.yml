@@ -27,6 +27,12 @@ functions:
       - httpApi:
           path: /blog/getAll
           method: GET
+  getAllEntriesInfinite:
+    handler: dist/getBlogPostsInfinite/httpHandler.handler
+    events:
+      - httpApi:
+          path: /blog/getAllInfinite
+          method: GET
 #  deleteEntry:
 #    handler: dist/deleteBlogPost/httpHandler.handler
 #    events:
