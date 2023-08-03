@@ -5,12 +5,13 @@ import {
   httpStatus,
 } from '../common/http';
 
-export async function getAllEntriesInfinite() {
+export async function getAllEntriesInfinite(currentPageId) {
   const supabase = getSupabaseClient();
   try {
     const { data } = await supabase
       .from(process.env.SUPABASE_BREAD_BLOG_TABLE_INFINITE)
       .select('*')
+      .eq('id', currentPageId)
       .order('created_at', { ascending: false });
     const response = buildSuccessResponse(data);
     return response;

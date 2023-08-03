@@ -31,7 +31,7 @@ functions:
     handler: dist/getBlogPostsInfinite/httpHandler.handler
     events:
       - httpApi:
-          path: /blog/getAllInfinite
+          path: /blog/getAllInfinite/{currentPageId}
           method: GET
 #  deleteEntry:
 #    handler: dist/deleteBlogPost/httpHandler.handler

@@ -9,7 +9,8 @@ export async function handler(httpRequest) {
   const { log, error } = console;
   log('getBlogPosts/httpHandler.handler()');
   try {
-    const data = await getAllEntriesInfinite(httpRequest);
+    const currentPageId = httpRequest.pathParameters?.currentPageId || 1;
+    const data = await getAllEntriesInfinite(currentPageId);
     return buildSuccessResponse(data);
   } catch (e) {
     error('getBlogPosts/httpHandler.handler() - error: ', e);
