@@ -9,7 +9,7 @@ export async function handler(httpRequest) {
   const { log, error } = console;
   log('getBlogPosts/httpHandler.handler()');
   try {
-    const currentPageId = httpRequest.pathParameters?.currentPageId || 1;
+    const currentPageId = httpRequest.pathParameters?.currentPageId || null;
     const data = await getAllEntriesInfinite(currentPageId);
     return buildSuccessResponse(data);
   } catch (e) {
