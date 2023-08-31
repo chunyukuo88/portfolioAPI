@@ -13,7 +13,7 @@ export async function getAllEntriesInfinite(currentPageId) {
       .from(process.env.SUPABASE_BREAD_BLOG_TABLE_INFINITE)
       .select('*')
       .order('id', { ascending: true });
-    return data[0];
+    return data[data.length - 1];
   };
 
   const getPageById = async (id) => {
