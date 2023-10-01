@@ -6,7 +6,7 @@ import {
 } from '../common/http';
 
 export async function getAllEntriesInfinite(currentPageId) {
-  const supabase = getSupabaseClient();
+  const supabase = await getSupabaseClient();
 
   const getMostRecentPage = async () => {
     const { data } = await supabase

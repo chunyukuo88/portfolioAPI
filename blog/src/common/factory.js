@@ -1,12 +1,30 @@
 import { createClient } from '@supabase/supabase-js';
+import AWS from 'aws-sdk';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-export function getSupabaseClient() {
-  const supabaseClient = createClient(
+async function getSupabaseDBKeyFromSSM() {
+  const ssm = new AWS.SSM();
+  const parameterName = process.env.SSM_PARAMETER_NAME_FOR_SUPABASE;
+
+  try {
+    const response = await ssm.getParameter({ Name: parameterName }).promise();
+
+    if (response?.Parameter && response?.Parameter?.Value) {
+      return response.Parameter.Value;
+    }
+    throw new Error(`Parameter ${parameterName} not found or has no value.`);
+  } catch (error) {
+    throw new Error(`Error fetching parameter ${parameterName}: ${error.message}`);
+  }
+}
+
+export async function getSupabaseClient() {
+  const supabaseDBKey = await getSupabaseDBKeyFromSSM(); // Get the key from SSM
+
+  return createClient(
     process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY,
+    supabaseDBKey,
   );
-  return supabaseClient;
 }
