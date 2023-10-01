@@ -11,7 +11,7 @@ async function getSupabaseDBKeyFromSSM() {
   try {
     const response = await ssm.getParameter({ Name: parameterName }).promise();
 
-    if (response?.Parameter && response?.Parameter?.Value) {
+    if (response?.Parameter?.Value) {
       return response.Parameter.Value;
     }
     throw new Error(`Parameter ${parameterName} not found or has no value.`);

@@ -41,7 +41,6 @@
     "@babel/preset-env": "^7.15.0",
     "@shelf/jest-dynamodb": "^3.3.1",
     "amazon-cognito-identity-js": "^5.2.10",
-    "aws-sdk-client-mock": "^1.0.0",
     "babel-jest": "^27.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.26.0",
