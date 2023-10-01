@@ -10,21 +10,20 @@ async function getSupabaseDBKeyFromSSM() {
 
   try {
     const response = await ssm.getParameter({ Name: parameterName }).promise();
-
     if (response?.Parameter?.Value) {
       return response.Parameter.Value;
     }
     throw new Error(`Parameter ${parameterName} not found or has no value.`);
   } catch (error) {
-    throw new Error(`Error fetching parameter ${parameterName}: ${error.message}`);
+    console.log('oh crap: ', error);
+    throw new Error(
+      `Error fetching parameter ${parameterName}: ${error.message}`,
+    );
   }
 }
 
 export async function getSupabaseClient() {
-  const supabaseDBKey = await getSupabaseDBKeyFromSSM(); // Get the key from SSM
+  const supabaseDBKey = await getSupabaseDBKeyFromSSM();
 
-  return createClient(
-    process.env.SUPABASE_URL,
-    supabaseDBKey,
-  );
+  return createClient(process.env.SUPABASE_URL, supabaseDBKey);
 }
