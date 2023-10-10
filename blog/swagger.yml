@@ -1,0 +1,23 @@
+openapi: 3.0.0
+info:
+  title: Blog API
+  version: 1.0.0
+paths:
+  /blog/getAll:
+    get:
+      summary: Get all blog entries
+      responses:
+        '200':
+          description: A list of blog entries
+  /blog/getAllInfinite/{currentPageId}:
+    get:
+      summary: Get blog entries with pagination
+      parameters:
+        - name: currentPageId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of paginated blog entries
