@@ -34,7 +34,7 @@ functions:
           path: /blog/getAllInfinite/{currentPageId}
           method: GET
   updateEntry:
-    handler: dist/updateBlogPost/httpHandler.updateBlogPost
+    handler: dist/updateBlogPost/httpHandler.handler
     events:
       - httpApi:
           path: /blog/update/{entityId}

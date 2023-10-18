@@ -1,9 +1,23 @@
-import { Controller } from '../../updateBlogPost/Controller';
+import { updateArticleWithinRow } from '../../updateBlogPost/Controller';
+import { getSupabaseClient } from '../../common/factory';
+
+const data = [{}];
+
+jest.mock('../../common/factory');
 
 const loggerSpy = jest.spyOn(console, 'log');
 
 describe('WHEN: given an ID and a payload,', () => {
   it('THEN: updates the entire entry with a new `results` value.', async () => {
+    getSupabaseClient.mockImplementationOnce(() => ({
+      from: jest.fn(() => ({
+        update: jest.fn(() => ({
+          eq: jest.fn(() => ({
+            data,
+          })),
+        })),
+      }))
+    }));
     const id = 4;
     const payload = {
       "title": "Test 12",
@@ -13,7 +27,7 @@ describe('WHEN: given an ID and a payload,', () => {
       "views": 50,
     };
 
-    await Controller(id, payload);
+    await updateArticleWithinRow(id, payload);
 
     expect(loggerSpy).toHaveBeenCalledTimes(1);
     expect(loggerSpy).toHaveBeenCalledWith();

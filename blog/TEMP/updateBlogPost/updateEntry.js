@@ -14,7 +14,7 @@ export async function updateEntry(entityId, blogData) {
     await client.close();
     return targetPost;
   } catch (e) {
-    error('Forsooth! The Controller error: ', e);
+    error('Forsooth! The updateArticleWithinRow error: ', e);
     return buildErrorResponse(httpStatus.INTERNAL_ERROR);
   }
 }

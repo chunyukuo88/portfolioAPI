@@ -86,7 +86,7 @@ describe("GIVEN: an entityId valid data to update an existing blog post", () => 
 
       expect(console.error).toBeCalledTimes(1);
       expect(console.error).toBeCalledWith(
-        "Forsooth! The Controller error: ",
+        "Forsooth! The updateArticleWithinRow error: ",
         expectedError
       );
     });
