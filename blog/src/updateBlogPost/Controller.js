@@ -44,6 +44,6 @@ export async function updateArticleWithinRow(rowId, payload) {
       console.log('Entry not found.');
     }
   } catch (e) {
-    console.log(`There was an error updating the entry: ${e}`);
+    console.log(`There was an error updating the entry: ${e.message}`);
   }
 }
