@@ -2,7 +2,7 @@ import { updateArticleWithinRow } from './Controller';
 import { buildErrorResponse, buildSuccessResponse, httpStatus } from '../common/http';
 
 export async function handler(httpRequest) {
-  console.log('handler()');
+  console.log('handler() ');
   try {
     const entityId = httpRequest.pathParameters.entityId;
     console.log('entityId: ', entityId);
