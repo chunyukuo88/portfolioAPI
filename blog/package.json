@@ -6,8 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage --colors --silent",
-    "build": "npm run lint && babel src -d dist",
-    "lint": "prettier --write src && eslint src --fix",
+    "build": "babel src -d dist",
     "list-endpoints-prod": "serverless info --stage prod",
     "list-endpoints-dev": "serverless info --stage dev",
     "deploy-offline": "npm run build && serverless offline start --stage offline",
@@ -28,7 +27,7 @@
     "@babel/runtime": "^7.20.13",
     "@supabase/supabase-js": "^2.7.1",
     "aws-sdk": "^2.1313.0",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",

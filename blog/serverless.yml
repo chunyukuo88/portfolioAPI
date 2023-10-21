@@ -33,20 +33,20 @@ functions:
       - httpApi:
           path: /blog/getAllInfinite/{currentPageId}
           method: GET
+  updateEntry:
+    handler: dist/updateBlogPost/httpHandler.handler
+    events:
+      - httpApi:
+          path: /blog/update/{entityId}
+          method: PUT
+          authorizer:
+            name: cognitoAuthorizer
 #  deleteEntry:
 #    handler: dist/deleteBlogPost/httpHandler.handler
 #    events:
 #      - httpApi:
 #          path: /blog/delete/{id}
 #          method: DELETE
-#          authorizer:
-#            name: cognitoAuthorizer
-#  updateEntry:
-#    handler: dist/updateBlogPost/httpHandler.updateBlogPost
-#    events:
-#      - httpApi:
-#          path: /blog/update/{entityId}
-#          method: PUT
 #          authorizer:
 #            name: cognitoAuthorizer
 #  writeBlogPost:

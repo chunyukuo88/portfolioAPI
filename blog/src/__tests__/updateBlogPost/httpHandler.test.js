@@ -45,7 +45,7 @@ describe("GIVEN: updateBlogPost/httpHandler.updateBlogPost()", () => {
   });
   describe("GIVEN: there is a problem with the database", () => {
     describe("WHEN: this function is called with otherwise valid data", () => {
-      const controllerError = new Error("error from Controller");
+      const controllerError = new Error("error from updateArticleWithinRow");
       beforeEach(() => {
         updateEntry.mockImplementationOnce(() => {
           throw controllerError;
