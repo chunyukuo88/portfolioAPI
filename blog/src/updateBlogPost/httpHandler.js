@@ -2,15 +2,13 @@ import { updateArticleWithinRow } from './Controller';
 import { buildErrorResponse, buildSuccessResponse, httpStatus } from '../common/http';
 
 export async function handler(httpRequest) {
-  console.log('handler() ');
+  const payload = JSON.parse(httpRequest.body);
   try {
     const entityId = httpRequest.pathParameters.entityId;
-    console.log('entityId: ', entityId);
-    const data = await updateArticleWithinRow(entityId, httpRequest.body);
-    console.log('data: ', data);
+    const data = await updateArticleWithinRow(entityId, payload);
     return buildSuccessResponse(data);
   } catch (e) {
-    console.error('updateBlogPosts/httpHandler.handler() - error!: ', e);
+    console.error('handler/error: ', e);
     return buildErrorResponse(httpStatus.INTERNAL_ERROR);
   }
 }
