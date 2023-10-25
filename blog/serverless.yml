@@ -4,6 +4,7 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  tracing: true
   environment:
     NODE_ENV: ${opt:stage}
     Table_NAME: HowzitHoozle-free-db
