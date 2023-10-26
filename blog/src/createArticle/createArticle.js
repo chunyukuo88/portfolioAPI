@@ -25,12 +25,21 @@ export async function createArticle(newBlogEntry) {
       .order('id', { ascending: true });
 
     const mostRecentPage = data[data.length - 1];
-    const newPage = createNewPage(mostRecentPage, newBlogEntry);
+    if (mostRecentPage.results.length < 3) {
+      mostRecentPage.results.push(newBlogEntry);
+      mostRecentPage.count = mostRecentPage.count + 1;
 
-    await supabase
-      .from(table)
-      .upsert(newPage);
+      return await supabase
+        .from(table)
+        .update(mostRecentPage);
+    }
+    if (mostRecentPage.results.length === 3) {
+      const newPage = createNewPage(mostRecentPage, newBlogEntry);
 
+      return await supabase
+        .from(table)
+        .upsert(newPage);
+    }
   } catch (e) {
     console.error('糟了，操作失敗: ', e);
   }
