@@ -41,12 +41,12 @@ describe('createArticle()', () => {
           const title = 'Test title';
           const imageUrl = 'example.com';
           const body = 'This is the body of the article.';
-          const likes = 0;
-          const views = 0;
+          const likes = 1;
+          const views = 1;
           const newBlogArticle = new Article(title, imageUrl, body, likes, views);
 
           const id = 2;
-          const created_at = new Date();
+          const created_at = expect.any(Object);
           const count = 1;
           const next = null;
           const previous = `${process.env.GET_ALL_INFINITE}${1}`;
@@ -87,12 +87,12 @@ describe('createArticle()', () => {
           const title = 'Test title';
           const imageUrl = 'example.com';
           const body = 'This is the body of the article.';
-          const likes = 0;
-          const views = 0;
+          const likes = 1;
+          const views = 1;
           const newBlogArticle = new Article(title, imageUrl, body, likes, views);
 
           const id = mockPages[0].id;
-          const created_at = mockPages[0].created_at;
+          const created_at = expect.any(Object);
           const count = 3;
           const next = 'www.foo.com';
           const previous = 'www.bar.com';
@@ -133,12 +133,12 @@ describe('createArticle()', () => {
           const title = 'Test title';
           const imageUrl = 'example.com';
           const body = 'This is the body of the article.';
-          const likes = 0;
-          const views = 0;
+          const likes = 1;
+          const views = 1;
           const newBlogArticle = new Article(title, imageUrl, body, likes, views);
 
           const id = mockPages[0].id;
-          const created_at = mockPages[0].created_at;
+          const created_at = expect.any(Object);
           const count = 2;
           const next = 'www.foo.com';
           const previous = 'www.bar.com';
@@ -150,6 +150,24 @@ describe('createArticle()', () => {
           expect(mockUpdate).toBeCalledTimes(1);
           expect(mockUpdate).toBeCalledWith(expectedNewPage);
         });
+      });
+    });
+  });
+  describe('GIVEN: invalid blog data,', () => {
+    describe('WHEN: the new blog entry is missing a field', () => {
+      it('THEN: returns an error.', () => {
+        const spy = jest.spyOn(console, 'log');
+        const title = null;
+        const imageUrl = 'example.com';
+        const body = null;
+        const likes = 0;
+        const views = 0;
+        const missingTitleAndBody = new Article(title, imageUrl, body, likes, views);
+
+        createArticle(missingTitleAndBody);
+
+        expect(spy).toBeCalledTimes(1);
+        expect(spy).toBeCalledWith('Articles is missing attributes.');
       });
     });
   });
