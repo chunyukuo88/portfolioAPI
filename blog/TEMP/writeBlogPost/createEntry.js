@@ -8,14 +8,14 @@ const invalidData = (blogData) => !blogData
 
 export async function createEntry(blogData) {
   const { log, error } = console;
-  log('createEntry()');
+  log('createArticle()');
   if (invalidData(blogData)) {
     return buildErrorResponse(httpStatus.MISSING_ARGUMENT);
   }
   try {
     const { blogPostRepository, client } = await getRepository();
     const newEntity = await blogPostRepository.createAndSave(blogData);
-    log('createEntry() - newEntity:', newEntity);
+    log('createArticle() - newEntity:', newEntity);
     await client.close();
     return newEntity;
   } catch (e) {

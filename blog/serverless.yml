@@ -4,7 +4,6 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
-  tracing: true
   environment:
     NODE_ENV: ${opt:stage}
     Table_NAME: HowzitHoozle-free-db
@@ -40,6 +39,14 @@ functions:
       - httpApi:
           path: /blog/update/{entityId}
           method: PUT
+          authorizer:
+            name: cognitoAuthorizer
+  createEntry:
+    handler: dist/createArticle/httpHandler.handler
+    events:
+      - httpApi:
+          path: /blog/create/
+          method: POST
           authorizer:
             name: cognitoAuthorizer
 #  deleteEntry:

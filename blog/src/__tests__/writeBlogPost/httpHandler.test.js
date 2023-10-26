@@ -2,7 +2,7 @@ import { createEntry } from "../../../TEMP/writeBlogPost/createEntry";
 import { writeBlogPost } from "../../../TEMP/writeBlogPost/httpHandler";
 import { errorMessages, httpStatus, standardHeaders } from "../../common/http";
 
-jest.mock("../../writeBlogPost/createEntry");
+jest.mock("../../writeBlogPost/createArticle");
 
 let spy;
 beforeEach(() => {

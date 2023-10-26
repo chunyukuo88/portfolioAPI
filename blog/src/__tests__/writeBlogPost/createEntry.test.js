@@ -1,108 +1,60 @@
-import { createEntry } from "../../../TEMP/writeBlogPost/createEntry";
-import { getRepository } from "../../common/repository";
-import { buildErrorResponse, httpStatus } from "../../common/http";
+import { getSupabaseClient } from '../../common/factory';
+import { Article } from '../../common/models/Article';
+import {createArticle} from "../../createArticle/createArticle";
+import {BlogPage} from "../../common/models/Page";
 
-jest.mock("../../common/repository");
+jest.mock('../../common/factory');
 
-jest.spyOn(console, "log").mockImplementation(jest.fn());
-jest.spyOn(console, "error").mockImplementation(jest.fn());
-
-afterEach(() => {
+beforeEach(() => {
   jest.clearAllMocks();
 });
 
-const validBlogData = {
-  title: "test",
-  creationTimeStamp: "1679409635239",
-  theme: "test",
-  imageUrl: "test",
-  likes: 0,
-  views: 0,
-};
-
-const blogDataWithMissingFields = {
-  title: "A valid title",
-  creationTimeStamp: null,
-  theme: undefined,
-  imageUrl: "www.example.com",
-};
-
-describe("createEntry()", () => {
+describe("createArticle()", () => {
   describe("GIVEN: valid blog data,", () => {
-    describe("WHEN: this function is invoked,", () => {
-      it("THEN: it returns a new blog entity, which is returned to the handler.", async () => {
-        const mockBlogEntity = {
-          foo: "bar",
-        };
-        getRepository.mockReturnValueOnce({
-          blogPostRepository: {
-            createAndSave: () => {
-              return mockBlogEntity;
-            },
-          },
-          client: {
-            close: jest.fn(),
-          },
-        });
+    describe("WHEN: the handler is invoked", () => {
+      describe("AND: The most recent page has 3 blog entries in it,", () => {
+        it("THEN: should create a new page in the database and add the blog entry to it.", async () => {
+          const upsert = jest.fn();
+          getSupabaseClient.mockImplementationOnce(jest.fn(() => ({
+            from: jest.fn(() => ({
+              select: jest.fn(() => ({
+                order: jest.fn(() => ({
+                  data: mockBlogEntries,
+                })),
+              })),
+              upsert,
+            })),
+          })));
 
-        const result = await createEntry(validBlogData);
+          const title = 'Test title';
+          const imageUrl = 'example.com';
+          const body = 'This is the body of the article.';
+          const likes = 0;
+          const views = 0;
+          const newBlogArticle = new Article(title, imageUrl, body, likes, views);
+          const id = 42;
+          const created_at = new Date(123);
+          const count = 1;
+          const next = null;
+          const previous = null;
+          const results = [newBlogArticle];
+          const expectedNewPage = new BlogPage(id, created_at, count, next, previous, results);
 
-        expect(result).toEqual(mockBlogEntity);
-      });
-    });
-  });
-  describe.each`
-    blogData
-    ${undefined}
-    ${null}
-    ${blogDataWithMissingFields}
-  `("UNHAPPY PATHS - DATA ", ({ blogData }) => {
-    describe("GIVEN: missing blog data,", () => {
-      describe("WHEN: this function is invoked,", () => {
-        it("THEN: it returns an error, which is returned to the handler.", async () => {
-          const expectedError = new Error(
-            "There was a problem removing the blog post."
-          );
-          getRepository.mockReturnValueOnce({
-            blogPostRepository: {
-              createAndSave: () => {
-                throw expectedError;
-              },
-            },
-            client: {
-              close: jest.fn(),
-            },
-          });
+          const result = await createArticle(newBlogArticle);
 
-          const result = await createEntry(blogData);
-
-          expect(result).toEqual(
-            buildErrorResponse(httpStatus.MISSING_ARGUMENT)
-          );
+          expect(upsert).toBeCalledTimes(1);
+          expect(upsert).toBeCalledWith(expectedNewPage);
         });
       });
-    });
-  });
-  describe("GIVEN: A problem with the database server,", () => {
-    describe("WHEN: given otherwise valid data,", () => {
-      const expectedError = new Error(
-        "There was a problem removing the blog post."
-      );
-      beforeEach(() => {
-        getRepository.mockRejectedValue(expectedError);
+      describe("AND: The most recent page has 2 blog entries in it,", () => {
+        it("THEN: should create a new page in the database and add the blog entry to it.", () => {
+
+        });
       });
-      it("THEN: it returns an error, which is returned to the handler.", async () => {
-        const result = await createEntry(validBlogData);
+      describe("AND: The most recent page has 1 blog entry in it,", () => {
+        it("THEN: should create a new page in the database and add the blog entry to it.", () => {
 
-        expect(result).toEqual(buildErrorResponse(httpStatus.INTERNAL_ERROR));
-      });
-      it("THEN: It invokes the console.error() method with a concatenated error message.", async () => {
-        const expectedErrorMsg = `createEntry() - the error: ${expectedError}`;
-
-        await createEntry(validBlogData);
-
-        expect(console.error).toBeCalledTimes(1);
-        expect(console.error).toBeCalledWith(expectedErrorMsg);
+        });
       });
     });
   });
