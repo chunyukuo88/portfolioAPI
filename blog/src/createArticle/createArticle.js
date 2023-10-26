@@ -1,5 +1,9 @@
 import { getSupabaseClient } from '../common/factory';
 
+function createNewPage(data) {
+
+}
+
 export async function createArticle(newBlogEntry) {
   const supabase = getSupabaseClient();
   try {
@@ -7,6 +11,8 @@ export async function createArticle(newBlogEntry) {
       .from(process.env.SUPABASE_BREAD_BLOG_TABLE_INFINITE)
       .select('*')
       .order('id', { ascending: true });
+
+    const newPage = createNewPage(data);
 
     await supabase
       .from(process.env.SUPABASE_BREAD_BLOG_TABLE_INFINITE)

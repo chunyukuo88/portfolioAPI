@@ -14,7 +14,9 @@ describe("createArticle()", () => {
     describe("WHEN: the handler is invoked", () => {
       describe("AND: The most recent page has 3 blog entries in it,", () => {
         it("THEN: should create a new page in the database and add the blog entry to it.", async () => {
-          const upsert = jest.fn();
+          const mockUpsert = jest.fn();
+
+          const mockBlogEntries = [];
           getSupabaseClient.mockImplementationOnce(jest.fn(() => ({
             from: jest.fn(() => ({
               select: jest.fn(() => ({
@@ -22,7 +24,7 @@ describe("createArticle()", () => {
                   data: mockBlogEntries,
                 })),
               })),
-              upsert,
+              upsert: mockUpsert,
             })),
           })));
 
@@ -32,7 +34,8 @@ describe("createArticle()", () => {
           const likes = 0;
           const views = 0;
           const newBlogArticle = new Article(title, imageUrl, body, likes, views);
-          const id = 42;
+
+          const id = 1;
           const created_at = new Date(123);
           const count = 1;
           const next = null;
@@ -40,10 +43,10 @@ describe("createArticle()", () => {
           const results = [newBlogArticle];
           const expectedNewPage = new BlogPage(id, created_at, count, next, previous, results);
 
-          const result = await createArticle(newBlogArticle);
+          await createArticle(newBlogArticle);
 
-          expect(upsert).toBeCalledTimes(1);
-          expect(upsert).toBeCalledWith(expectedNewPage);
+          expect(mockUpsert).toBeCalledTimes(1);
+          expect(mockUpsert).toBeCalledWith(expectedNewPage);
         });
       });
       describe("AND: The most recent page has 2 blog entries in it,", () => {
