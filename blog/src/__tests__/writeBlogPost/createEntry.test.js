@@ -61,6 +61,7 @@ describe('createArticle()', () => {
       });
       describe('AND: The most recent page has 2 blog entries in it,', () => {
         it('THEN: should create a new page in the database and add the blog entry to it.', async () => {
+          const twoArticles = [{},{}];
           const mockPages = [
             {
               id: 1,
@@ -68,7 +69,7 @@ describe('createArticle()', () => {
               count: 2,
               next: 'www.foo.com',
               previous: 'www.bar.com',
-              results: [{},{}]
+              results: twoArticles
             }
           ];
           getSupabaseClient.mockImplementationOnce(() => ({
@@ -106,7 +107,48 @@ describe('createArticle()', () => {
       });
       describe('AND: The most recent page has 1 blog entry in it,', () => {
         it('THEN: should create a new page in the database and add the blog entry to it.', async () => {
+          const onlyOneArticle = [{}];
+          const mockPages = [
+            {
+              id: 1,
+              created_at: new Date(12),
+              count: 1,
+              next: 'www.foo.com',
+              previous: 'www.bar.com',
+              results: onlyOneArticle,
+            }
+          ];
+          getSupabaseClient.mockImplementationOnce(() => ({
+            from: jest.fn(() => ({
+              select: jest.fn(() => ({
+                order: jest.fn(() => ({
+                  data: mockPages,
+                })),
+              })),
+              upsert: mockUpsert,
+              update: mockUpdate,
+            })),
+          }));
 
+          const title = 'Test title';
+          const imageUrl = 'example.com';
+          const body = 'This is the body of the article.';
+          const likes = 0;
+          const views = 0;
+          const newBlogArticle = new Article(title, imageUrl, body, likes, views);
+
+          const id = mockPages[0].id;
+          const created_at = mockPages[0].created_at;
+          const count = 2;
+          const next = 'www.foo.com';
+          const previous = 'www.bar.com';
+          const results = [{},newBlogArticle];
+          const expectedNewPage = new BlogPage(id, created_at, count, next, previous, results);
+
+          await createArticle(newBlogArticle);
+
+          expect(mockUpdate).toBeCalledTimes(1);
+          expect(mockUpdate).toBeCalledWith(expectedNewPage);
         });
       });
     });
