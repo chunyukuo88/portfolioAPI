@@ -7,7 +7,7 @@ function createNewPage(mostRecentPage, newBlogEntry) {
   const created_at = new Date();
   const count = 1;
   const newNext = null;
-  const newPrevious = process.env.GET_ALL_INFINITE + id;
+  const newPrevious = `${process.env.GET_ALL_INFINITE}${id}`;
   const results = [newBlogEntry];
   return new BlogPage(newId, created_at, count, newNext, newPrevious, results);
 }
@@ -26,7 +26,7 @@ export async function createArticle(newBlogEntry) {
 
     await supabase
       .from(process.env.SUPABASE_BREAD_BLOG_TABLE_INFINITE)
-      .upsert([newBlogEntry]);
+      .upsert(newPage);
 
   } catch (e) {
     console.error('糟了，操作失敗: ', e);

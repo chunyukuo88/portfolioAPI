@@ -44,18 +44,18 @@ describe('createArticle()', () => {
           const views = 0;
           const newBlogArticle = new Article(title, imageUrl, body, likes, views);
 
-          const id = 1;
-          const created_at = new Date(123);
+          const id = 2;
+          const created_at = new Date();
           const count = 1;
           const next = null;
-          const previous = null;
+          const previous = `${process.env.GET_ALL_INFINITE}${1}`;
           const results = [newBlogArticle];
           const expectedNewPage = new BlogPage(id, created_at, count, next, previous, results);
 
           await createArticle(newBlogArticle);
 
           expect(mockUpsert).toBeCalledTimes(1);
-          // expect(mockUpsert).toBeCalledWith(expectedNewPage);
+          expect(mockUpsert).toBeCalledWith(expectedNewPage);
         });
       });
       describe('AND: The most recent page has 2 blog entries in it,', () => {
