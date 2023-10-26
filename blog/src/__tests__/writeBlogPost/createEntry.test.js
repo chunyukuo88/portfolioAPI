@@ -156,7 +156,7 @@ describe('createArticle()', () => {
   describe('GIVEN: invalid blog data,', () => {
     describe('WHEN: the new blog entry is missing a field', () => {
       it('THEN: returns an error.', () => {
-        const spy = jest.spyOn(console, 'log');
+        const spy = jest.spyOn(console, 'log').mockImplementationOnce(jest.fn());
         const title = null;
         const imageUrl = 'example.com';
         const body = null;
@@ -169,6 +169,26 @@ describe('createArticle()', () => {
         expect(spy).toBeCalledTimes(1);
         expect(spy).toBeCalledWith('Articles is missing attributes.');
       });
+    });
+  });
+  describe('WHEN: supabase or the factory has a problem', () => {
+    it('THEN: it logs an error.', () => {
+      const error = new Error('Supabase is broken');
+      getSupabaseClient.mockImplementationOnce(() => {
+        throw error;
+      });
+      const spy = jest.spyOn(console, 'error').mockImplementationOnce(jest.fn());
+
+      const title = 'Test title';
+      const imageUrl = 'example.com';
+      const body = 'This is the body of the article.';
+      const likes = 1;
+      const views = 1;
+      const newBlogArticle = new Article(title, imageUrl, body, likes, views);
+
+      createArticle(newBlogArticle);
+
+      expect(spy).toBeCalledWith('糟了，操作失敗: ', error);
     });
   });
 });
