@@ -45,7 +45,7 @@ functions:
     handler: dist/createArticle/httpHandler.handler
     events:
       - httpApi:
-          path: /blog/create/
+          path: /blog/create
           method: POST
           authorizer:
             name: cognitoAuthorizer
