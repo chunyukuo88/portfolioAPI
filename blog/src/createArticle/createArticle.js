@@ -29,6 +29,7 @@ const articleIsInvalid = (newBlogArticle) => {
 }
 
 export async function createArticle(newBlogArticle) {
+  console.log('0');
   if (articleIsInvalid(newBlogArticle)) {
     return console.log('Articles is missing attributes.');
   }
@@ -49,6 +50,7 @@ export async function createArticle(newBlogArticle) {
         .update(mostRecentPage);
     }
     if (mostRecentPage.results.length === 3) {
+      console.log('mmmm');
       const newPage = createNewPage(mostRecentPage, newBlogArticle);
 
       return await supabase
