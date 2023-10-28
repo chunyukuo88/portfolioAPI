@@ -58,6 +58,9 @@ describe('createArticle()', () => {
           expect(mockUpsert).toBeCalledTimes(1);
           expect(mockUpsert).toBeCalledWith(expectedNewPage);
         });
+        it('THEN: should also update the `next` field of the previous database entry', () => {
+          // TODO Compare database rows 4 and 5. Note that database row 4 should have a 'next' field with a URL rather than the current 'null' value.
+        });
       });
       describe('AND: The most recent page has 2 blog entries in it,', () => {
         it('THEN: should create a new page in the database and add the blog entry to it.', async () => {
