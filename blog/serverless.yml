@@ -41,7 +41,7 @@ functions:
           method: PUT
           authorizer:
             name: cognitoAuthorizer
-  createEntry:
+  createArticle:
     handler: dist/createArticle/httpHandler.handler
     events:
       - httpApi:
