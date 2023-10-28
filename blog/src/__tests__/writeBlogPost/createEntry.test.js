@@ -63,7 +63,7 @@ describe('createArticle()', () => {
         });
       });
       describe('AND: The most recent page has 2 blog entries in it,', () => {
-        it('THEN: should create a new page in the database and add the blog entry to it.', async () => {
+        it('THEN: add the blog entry to the most recent page.', async () => {
           const twoArticles = [{},{}];
           const mockPages = [
             {
@@ -109,7 +109,7 @@ describe('createArticle()', () => {
         });
       });
       describe('AND: The most recent page has 1 blog entry in it,', () => {
-        it('THEN: should create a new page in the database and add the blog entry to it.', async () => {
+        it('THEN: add the blog entry to the most recent page.', async () => {
           const onlyOneArticle = [{}];
           const mockPages = [
             {
