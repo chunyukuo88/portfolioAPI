@@ -44,15 +44,18 @@ describe('addArticleToDatabase()', () => {
                   data: mockPages,
                 })),
               })),
+              update: mockUpdate,
               upsert: mockUpsert,
             })),
           }));
         });
-        const title = 'Test title';
-        const imageUrl = 'example.com';
-        const body = 'This is the body of the article.';
+        const newArticleData = {
+          title: 'Test title',
+          imageUrl: 'example.com',
+          body: 'This is the body of the article.',
+        };
         const page = 2;
-        const newBlogArticle = buildNewArticle({title, imageUrl, body}, page);
+        const newBlogArticle = buildNewArticle(newArticleData, page);
 
         const id = 1;
         const created_at = expect.any(Object);
@@ -74,15 +77,60 @@ describe('addArticleToDatabase()', () => {
 
           expect(mockUpsert).toBeCalledWith(expectedNewPage);
         });
-        it.skip('THEN: should also update the `next` field of the previous database entry', () => {
-          //
+      });
+      describe('WHEN: Adding an article to a brand new page,', () => {
+        it('THEN: should update the `next` field of the previous page with a URL string.', async () => {
+          const pageOne = {
+            id: 1,
+            created_at: new Date().setMilliseconds(0),
+            count: 3,
+            next: null,
+            previous: null,
+            results: [
+              { page: 1 },
+              { page: 1 },
+              { page: 1 },
+            ],
+          };
+          const mockPages = [pageOne];
+          getSupabaseClient.mockImplementationOnce(() => ({
+            from: jest.fn(() => ({
+              select: jest.fn(() => ({
+                order: jest.fn(() => ({
+                  data: mockPages,
+                })),
+              })),
+              update: mockUpdate,
+              upsert: mockUpsert,
+            })),
+          }));
+          const newArticleData = {
+            title: 'Test title',
+            imageUrl: 'example.com',
+            body: 'This is the body of the article.',
+          };
+          const page = 2;
+          const newBlogArticle = buildNewArticle(newArticleData, page);
+
+          // const id = 1;
+          // const created_at = expect.any(Object);
+          // const count = 1;
+          // const next = null;
+          // const previous = `${process.env.GET_ALL_INFINITE}${1}`;
+          // const results = [newBlogArticle];
+
+          const expectedUrl = `${process.env.GET_ALL_INFINITE}2`;
+
+          await addArticleToDatabase(newBlogArticle);
+
+          expect(pageOne.next).toEqual(expectedUrl);
         });
       });
       describe('AND: The most recent page has 2 blog articles in it,', () => {
         it('THEN: add the blog entry to the most recent page.', async () => {
           const mostRecentPageWithTwoArticles = [
-            { page: 1},
-            { page: 1},
+            { page: 1 },
+            { page: 1 },
           ];
           const created_at = new Date().setMilliseconds(0);
           const mockPages = [

@@ -6,14 +6,6 @@ import {
 } from './utils';
 const table = process.env.SUPABASE_BREAD_BLOG_TABLE_INFINITE;
 
-async function getMostRecentPage(supabase) {
-  const { data } = await supabase
-    .from(table)
-    .select('*')
-    .order('id', { ascending: true });
-  return data[data.length - 1];
-}
-
 async function addArticleToExistingPage(mostRecentPage, newArticleData, supabase) {
   const mostRecentPageNumber = mostRecentPage.results[0].page;
   const newArticle = buildNewArticle(newArticleData, mostRecentPageNumber);
@@ -22,6 +14,15 @@ async function addArticleToExistingPage(mostRecentPage, newArticleData, supabase
   return await supabase
     .from(table)
     .update(mostRecentPage);
+}
+
+async function updatePreviousPage(previousPage, supabase) {
+  const incrementedPageNumber = previousPage.id + 1;
+  previousPage.next = `${process.env.GET_ALL_INFINITE}${incrementedPageNumber}`;
+
+  return await supabase
+    .from(table)
+    .update(previousPage);
 }
 
 async function addArticleToNewPage(mostRecentPage, newArticleData, supabase) {
@@ -41,11 +42,17 @@ export async function addArticleToDatabase(newArticleData) {
 
   try {
     const supabase = getSupabaseClient();
-    const mostRecentPage = await getMostRecentPage(supabase);
+    const { data } = await supabase
+      .from(table)
+      .select('*')
+      .order('id', { ascending: true });
+    const mostRecentPage = data[data.length - 1];
+
     if (mostRecentPage.results.length < 3) {
       return await addArticleToExistingPage(mostRecentPage, newArticleData, supabase);
     }
     if (mostRecentPage.results.length === 3) {
+      await updatePreviousPage(mostRecentPage, supabase);
       return await addArticleToNewPage(mostRecentPage, newArticleData, supabase);
     }
   } catch (e) {
