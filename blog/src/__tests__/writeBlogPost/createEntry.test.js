@@ -132,11 +132,12 @@ describe('addArticleToDatabase()', () => {
       });
       describe('AND: The most recent page has 1 blog entry in it,', () => {
         it('THEN: add the blog entry to the most recent page.', async () => {
-          const onlyOneArticle = [{}];
+          const onlyOneArticle = [{ page: 1 }];
+          const created_at = new Date().setMilliseconds(0);
           const mockPages = [
             {
               id: 1,
-              created_at: new Date(12),
+              created_at,
               count: 1,
               next: 'www.foo.com',
               previous: 'www.bar.com',
@@ -159,20 +160,21 @@ describe('addArticleToDatabase()', () => {
           const imageUrl = 'example.com';
           const body = 'This is the body of the article.';
           const page = 1;
-          const newBlogArticle = new Article(title, imageUrl, body, page);
+          const newBlogArticle = buildNewArticle({ title, imageUrl, body }, page);
 
-          const id = mockPages[0].id;
-          const created_at = expect.any(Object);
-          const count = 2;
-          const next = 'www.foo.com';
-          const previous = 'www.bar.com';
-          const results = [{},newBlogArticle];
-          const expectedNewPage = new BlogPage(id, created_at, count, next, previous, results);
+          const expectedPage = {
+            id: mockPages[0].id,
+            created_at,
+            count: 2,
+            next: 'www.foo.com',
+            previous: 'www.bar.com',
+            results: [...onlyOneArticle, newBlogArticle],
+          };
 
           await addArticleToDatabase(newBlogArticle);
 
           expect(mockUpdate).toBeCalledTimes(1);
-          expect(mockUpdate).toBeCalledWith(expectedNewPage);
+          expect(mockUpdate).toBeCalledWith(expectedPage);
         });
       });
     });
