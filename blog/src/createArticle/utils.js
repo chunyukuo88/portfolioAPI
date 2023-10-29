@@ -6,7 +6,7 @@ export function createNewPage(mostRecentPage, newBlogArticle) {
   const id = mostRecentPage.id
     ? mostRecentPage.id + 1
     : 1;
-  const created_at = new Date().setMilliseconds(0);
+  const created_at = new Date();
   const count = 1;
   const next = null;
   const previous = mostRecentPage.id ? `${endpoint}${mostRecentPage.id}` : null;
