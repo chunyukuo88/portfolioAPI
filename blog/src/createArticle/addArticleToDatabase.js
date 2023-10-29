@@ -6,6 +6,8 @@ import {
 } from './utils';
 const table = process.env.SUPABASE_BREAD_BLOG_TABLE_INFINITE;
 
+const maxArticlesPerPage = 3;
+
 async function addArticleToExistingPage(mostRecentPage, newArticleData, supabase) {
   console.log('addArticleToExistingPage()');
   const mostRecentPageNumber = mostRecentPage.results[0].page;
@@ -13,11 +15,10 @@ async function addArticleToExistingPage(mostRecentPage, newArticleData, supabase
   mostRecentPage.results.push(newArticle);
   mostRecentPage.count = mostRecentPage.count + 1;
 
-  await supabase
+  console.log('addArticleToExistingPage() - mostRecentPage:', mostRecentPage);
+  return await supabase
     .from(table)
     .update(mostRecentPage);
-  console.log('addArticleToExistingPage() - mostRecentPage:', mostRecentPage);
-  return mostRecentPage;
 }
 
 async function updatePreviousPage(previousPage, supabase) {
@@ -25,10 +26,10 @@ async function updatePreviousPage(previousPage, supabase) {
   const incrementedPageNumber = previousPage.id + 1;
   previousPage.next = `${process.env.GET_ALL_INFINITE}${incrementedPageNumber}`;
 
-  await supabase
+ console.log('updatePreviousPage() - previousPage: ', previousPage);
+  return await supabase
     .from(table)
     .update(previousPage);
-  return console.log('updatePreviousPage() - previousPage: ', previousPage);
 }
 
 async function addArticleToNewPage(mostRecentPage, newArticleData, supabase) {
@@ -37,11 +38,10 @@ async function addArticleToNewPage(mostRecentPage, newArticleData, supabase) {
   const newArticle = buildNewArticle(newArticleData, incrementedPageNumber);
   const newPage = createNewPage(mostRecentPage, newArticle);
 
-  await supabase
+  console.log('addArticleToNewPage() - newPage: ', newPage);
+  return await supabase
     .from(table)
     .upsert(newPage);
-  console.log('addArticleToNewPage() - newPage: ', newPage);
-  return newPage;
 }
 
 export async function addArticleToDatabase(newArticleData) {
@@ -57,10 +57,10 @@ export async function addArticleToDatabase(newArticleData) {
       .order('id', { ascending: true });
     const mostRecentPage = data[data.length - 1];
 
-    if (mostRecentPage.results.length < 3) {
+    if (mostRecentPage.results.length < maxArticlesPerPage) {
       return await addArticleToExistingPage(mostRecentPage, newArticleData, supabase);
     }
-    if (mostRecentPage.results.length === 3) {
+    if (mostRecentPage.results.length === maxArticlesPerPage) {
       await updatePreviousPage(mostRecentPage, supabase);
       return await addArticleToNewPage(mostRecentPage, newArticleData, supabase);
     }
