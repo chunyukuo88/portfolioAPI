@@ -4,7 +4,6 @@ import {
   buildNewArticle,
   articleIsInvalid,
 } from './utils';
-import {logPlugin} from "@babel/preset-env/lib/debug";
 const table = process.env.SUPABASE_BREAD_BLOG_TABLE_INFINITE;
 
 async function addArticleToExistingPage(mostRecentPage, newArticleData, supabase) {
