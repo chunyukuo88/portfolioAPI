@@ -25,7 +25,6 @@ async function addArticleToExistingPage(mostRecentPage, newArticleData, supabase
 }
 
 async function addArticleToNewPage(mostRecentPage, newArticleData, supabase) {
-  console.dir(mostRecentPage);
   const incrementedPageNumber = mostRecentPage.results[0].page + 1;
   const newArticle = buildNewArticle(newArticleData, incrementedPageNumber);
   const newPage = createNewPage(mostRecentPage, newArticle);

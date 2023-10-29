@@ -1,5 +1,8 @@
 /* eslint-disable camelcase */
 
+/**
+ * MODEL only; instantiate via the function in utils.js instead.
+ * */
 export function BlogPage(id, created_at, count, next, previous, results) {
   this.id = id; // number
   this.created_at = created_at; // Date object

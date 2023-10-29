@@ -1,10 +1,8 @@
 import { getSupabaseClient } from '../../common/factory';
-import { Article } from '../../common/models/Article';
 import { addArticleToDatabase } from '../../createArticle/addArticleToDatabase';
 import {
   createNewPage,
   buildNewArticle,
-  articleIsInvalid,
 } from '../../createArticle/utils';
 import 'uuid';
 
@@ -77,7 +75,7 @@ describe('addArticleToDatabase()', () => {
           expect(mockUpsert).toBeCalledWith(expectedNewPage);
         });
         it.skip('THEN: should also update the `next` field of the previous database entry', () => {
-          // TODO Compare database rows 4 and 5. Note that database row 4 should have a 'next' field with a URL rather than the current 'null' value.
+          //
         });
       });
       describe('AND: The most recent page has 2 blog articles in it,', () => {
@@ -187,7 +185,7 @@ describe('addArticleToDatabase()', () => {
         const imageUrl = 'example.com';
         const body = null;
         const page = 1;
-        const missingTitleAndBody = new Article(title, imageUrl, body, page);
+        const missingTitleAndBody = buildNewArticle({title, imageUrl, body}, page);
 
         addArticleToDatabase(missingTitleAndBody);
 
@@ -208,7 +206,7 @@ describe('addArticleToDatabase()', () => {
       const imageUrl = 'example.com';
       const body = 'This is the body of the article.';
       const page = 1;
-      const newBlogArticle = new Article(title, imageUrl, body, page);
+      const newBlogArticle = buildNewArticle({title, imageUrl, body}, page);
 
       addArticleToDatabase(newBlogArticle);
 
