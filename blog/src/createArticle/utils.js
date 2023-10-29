@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as createUniqueId } from 'uuid';
 
 const endpoint = process.env.GET_ALL_INFINITE;
 
@@ -6,7 +6,7 @@ export function createNewPage(mostRecentPage, newBlogArticle) {
   const id = mostRecentPage.id
     ? mostRecentPage.id + 1
     : 1;
-  const created_at = new Date();
+  const created_at = new Date().setMilliseconds(0);
   const count = 1;
   const newNext = null;
   const newPrevious = `${endpoint}${3}`;
@@ -21,7 +21,7 @@ export function buildNewArticle(newArticleData, page) {
     imageUrl,
     body,
     page,
-    articleId: uuidv4(),
+    articleId: createUniqueId(),
     likes: 1,
     views: 1,
   }

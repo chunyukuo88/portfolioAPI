@@ -35,7 +35,7 @@ async function addArticleToNewPage(mostRecentPage, newArticleData, supabase) {
     .upsert(newPage);
 }
 
-export async function createArticle(newArticleData) {
+export async function addArticleToDatabase(newArticleData) {
   if (articleIsInvalid(newArticleData)) {
     return console.log('Articles is missing attributes.');
   }

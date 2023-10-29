@@ -1,14 +1,17 @@
 import { getSupabaseClient } from '../../common/factory';
 import { Article } from '../../common/models/Article';
-import { createArticle } from '../../createArticle/createArticle';
+import { addArticleToDatabase } from '../../createArticle/addArticleToDatabase';
 import {
   createNewPage,
   buildNewArticle,
   articleIsInvalid,
 } from '../../createArticle/utils';
+import 'uuid';
 
 jest.mock('../../common/factory');
-jest.mock('../../createArticle/utils');
+jest.mock('uuid', () => ({
+  v4: () => 'some unique ID',
+}));
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -17,7 +20,7 @@ afterEach(() => {
 const mockUpsert = jest.fn();
 const mockUpdate = jest.fn();
 
-describe('createArticle()', () => {
+describe('addArticleToDatabase()', () => {
   describe('GIVEN: valid blog data,', () => {
     describe('WHEN: the handler is invoked', () => {
       describe('AND: The most recent page has 3 blog entries in it,', () => {
@@ -61,7 +64,7 @@ describe('createArticle()', () => {
         const results = [newBlogArticle];
 
         it('THEN: should invoke the ORM method that creates a new page in the database.', async () => {
-          await createArticle(newBlogArticle);
+          await addArticleToDatabase(newBlogArticle);
 
           expect(mockUpsert).toBeCalledTimes(1);
         });
@@ -69,7 +72,7 @@ describe('createArticle()', () => {
           const pageData = { id, created_at, count, next, previous, results };
           const expectedNewPage = createNewPage(pageData, newBlogArticle);
 
-          await createArticle(newBlogArticle);
+          await addArticleToDatabase(newBlogArticle);
 
           expect(mockUpsert).toBeCalledWith(expectedNewPage);
         });
@@ -79,18 +82,19 @@ describe('createArticle()', () => {
       });
       describe('AND: The most recent page has 2 blog articles in it,', () => {
         it('THEN: add the blog entry to the most recent page.', async () => {
-          const twoArticles = [
+          const mostRecentPageWithTwoArticles = [
             { page: 1},
             { page: 1},
           ];
+          const created_at = new Date().setMilliseconds(0);
           const mockPages = [
             {
               id: 1,
-              created_at: new Date(12),
-              count: twoArticles.length,
+              created_at,
+              count: mostRecentPageWithTwoArticles.length,
               next: 'www.foo.com',
               previous: 'www.bar.com',
-              results: twoArticles
+              results: mostRecentPageWithTwoArticles
             }
           ];
           getSupabaseClient.mockImplementationOnce(() => ({
@@ -113,18 +117,17 @@ describe('createArticle()', () => {
 
           const mostRecentPage = {
             id: mockPages[0].id,
-            created_at: expect.any(Object),
+            created_at,
             count: 3,
             next: 'www.foo.com',
             previous: 'www.bar.com',
-            results: [{},{},newBlogArticle],
+            results: [...mostRecentPageWithTwoArticles, newBlogArticle],
           };
-          const expectedNewPage = createNewPage(mostRecentPage, newBlogArticle);
 
-          await createArticle(newBlogArticle);
+          await addArticleToDatabase(newBlogArticle);
 
           expect(mockUpdate).toBeCalledTimes(1);
-          expect(mockUpdate).toBeCalledWith(expectedNewPage);
+          expect(mockUpdate).toBeCalledWith(mostRecentPage);
         });
       });
       describe('AND: The most recent page has 1 blog entry in it,', () => {
@@ -166,7 +169,7 @@ describe('createArticle()', () => {
           const results = [{},newBlogArticle];
           const expectedNewPage = new BlogPage(id, created_at, count, next, previous, results);
 
-          await createArticle(newBlogArticle);
+          await addArticleToDatabase(newBlogArticle);
 
           expect(mockUpdate).toBeCalledTimes(1);
           expect(mockUpdate).toBeCalledWith(expectedNewPage);
@@ -184,7 +187,7 @@ describe('createArticle()', () => {
         const page = 1;
         const missingTitleAndBody = new Article(title, imageUrl, body, page);
 
-        createArticle(missingTitleAndBody);
+        addArticleToDatabase(missingTitleAndBody);
 
         expect(spy).toBeCalledTimes(1);
         expect(spy).toBeCalledWith('Articles is missing attributes.');
@@ -205,7 +208,7 @@ describe('createArticle()', () => {
       const page = 1;
       const newBlogArticle = new Article(title, imageUrl, body, page);
 
-      createArticle(newBlogArticle);
+      addArticleToDatabase(newBlogArticle);
 
       expect(spy).toBeCalledWith('糟了，操作失敗: ', error);
     });
