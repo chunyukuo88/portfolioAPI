@@ -7,13 +7,13 @@ import { addArticleToDatabase } from './addArticleToDatabase';
 
 export async function handler(httpRequest) {
   const { log, error } = console;
-  log('addArticleToDatabase/httpHandler.handler()');
+  log('createArticle/createHandler.handler()');
   try {
     const newBlogArticle = JSON.parse(httpRequest.body);
-    await addArticleToDatabase(newBlogArticle);
-    return buildSuccessResponse(newBlogArticle);
+    const result = await addArticleToDatabase(newBlogArticle);
+    return buildSuccessResponse(result);
   } catch (e) {
-    error('addArticleToDatabase/httpHandler.handler() - error: ', e);
+    error('createArticle/createHandler.handler() - error: ', e);
     return buildErrorResponse(httpStatus.INTERNAL_ERROR);
   }
 }

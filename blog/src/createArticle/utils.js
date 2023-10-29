@@ -8,10 +8,10 @@ export function createNewPage(mostRecentPage, newBlogArticle) {
     : 1;
   const created_at = new Date().setMilliseconds(0);
   const count = 1;
-  const newNext = null;
-  const newPrevious = `${endpoint}${3}`;
+  const next = null;
+  const previous = mostRecentPage.id ? `${endpoint}${mostRecentPage.id}` : null;
   const results = [newBlogArticle];
-  return { id, created_at, count, newNext, newPrevious, results };
+  return { id, created_at, count, next, previous, results };
 }
 
 export function buildNewArticle(newArticleData, page) {

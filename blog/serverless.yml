@@ -36,7 +36,7 @@ functions:
           authorizer:
             name: cognitoAuthorizer
   createArticle:
-    handler: dist/createArticle/addArticleToDatabase.handler
+    handler: dist/createArticle/createHandler.handler
     events:
       - httpApi:
           path: /blog/create
@@ -51,4 +51,3 @@ functions:
 #          method: DELETE
 #          authorizer:
 #            name: cognitoAuthorizer
-
