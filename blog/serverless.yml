@@ -21,39 +21,33 @@ custom:
   tableName: HowzitHoozle-free-db
 
 functions:
-  getAllEntries:
-    handler: dist/getBlogPosts/httpHandler.handler
-    events:
-      - httpApi:
-          path: /blog/getAll
-          method: GET
   getAllEntriesInfinite:
-    handler: dist/getBlogPostsInfinite/httpHandler.handler
+    handler: dist/getBlogPostsInfinite/getHandler.handler
     events:
       - httpApi:
           path: /blog/getAllInfinite/{currentPageId}
           method: GET
   updateEntry:
-    handler: dist/updateBlogPost/httpHandler.handler
+    handler: dist/updateBlogPost/updateHandler.handler
     events:
       - httpApi:
           path: /blog/update/{entityId}
           method: PUT
           authorizer:
             name: cognitoAuthorizer
+  createArticle:
+    handler: dist/createArticle/createHandler.handler
+    events:
+      - httpApi:
+          path: /blog/create
+          method: POST
+          authorizer:
+            name: cognitoAuthorizer
 #  deleteEntry:
-#    handler: dist/deleteBlogPost/httpHandler.handler
+#    handler: dist/deleteBlogPost/deleteHandler.handler
 #    events:
 #      - httpApi:
 #          path: /blog/delete/{id}
 #          method: DELETE
-#          authorizer:
-#            name: cognitoAuthorizer
-#  writeBlogPost:
-#    handler: dist/writeBlogPost/httpHandler.writeBlogPost
-#    events:
-#      - httpApi:
-#          path: /blog/write
-#          method: POST
 #          authorizer:
 #            name: cognitoAuthorizer
