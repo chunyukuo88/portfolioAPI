@@ -36,7 +36,7 @@ functions:
           authorizer:
             name: cognitoAuthorizer
   createArticle:
-    handler: dist/addArticleToDatabase/createHandler.handler
+    handler: dist/createArticle/addArticleToDatabase.handler
     events:
       - httpApi:
           path: /blog/create
