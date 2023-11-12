@@ -18,7 +18,7 @@ async function addArticleToExistingPage(mostRecentPage, newArticleData, supabase
   console.log('addArticleToExistingPage() - mostRecentPage:', mostRecentPage);
   return await supabase
     .from(table)
-    .update(mostRecentPage);
+    .upsert(mostRecentPage);
 }
 
 async function updatePreviousPage(previousPage, supabase) {
@@ -27,7 +27,7 @@ async function updatePreviousPage(previousPage, supabase) {
   previousPage.next = `${process.env.GET_ALL_INFINITE}${incrementedPageNumber}`;
 
  console.log('updatePreviousPage() - previousPage: ', previousPage);
-  return await supabase
+  return supabase
     .from(table)
     .update(previousPage);
 }
